@@ -7,29 +7,30 @@ import ImageSlider from '../../utils/imageSlider';
 import CheckBox from '../LandingPage/Sections/CheckBox';
 import RadioBox from '../LandingPage/Sections/RadioBox';
 import {continents, price} from './Sections/Datas'
+import SearchFeature from './Sections/SearchFeature';
 
 function LandingPage() {
   
   const [Products, setProducts] = useState([])
   const [Skip, setSkip] = useState(0)
-  const [Limit, setLimit] = useState(4)
+  const [Limit, setLimit] = useState(8)
   const [PostSize, setPostSize] = useState(0)
   const [Filters, setFilters] = useState({
     continents: [],
     price: []
   })
+  const [SearchTerm, setSearchTerm] = useState("")
+
 
   useEffect(() => {
-
     let body ={
       skip: Skip,
       limit: Limit
     }
-
   getProducts(body)
-
   }, [])
   
+
   const getProducts = (body) => {
     axios.post('/api/product/products', body)
     .then(response => {
@@ -48,15 +49,14 @@ function LandingPage() {
   
   
   const loadMoreHandler = () => {
- 
     let skip = Skip + Limit
-
+    
     let body ={
       skip: skip,
       limit: Limit,
       loadMore: true
     }
-
+    
     getProducts(body)
     setSkip(skip)
   }
@@ -65,7 +65,7 @@ function LandingPage() {
   const renderCards = Products.map((product, index) => {
     return <Col lg={6} md={8} xs={24} key={index}>
       <Card
-        cover={<ImageSlider images={product.images} />}
+        cover={ <a href={`/product/${ product._id }` }><ImageSlider images={ product.images } /></a> }
       >
         <Meta 
           title={product.title}
@@ -82,10 +82,9 @@ function LandingPage() {
       limit: Limit,
       filters: filters
     }
-
+    
     getProducts(body)
     setSkip(0)
-
   }
 
 
@@ -113,6 +112,19 @@ function LandingPage() {
     setFilters(newFilters)
   }
 
+  const updateSearchTerm = (newSearchTerm) => {
+    let body = {
+      skip: 0,
+      limit: Limit,
+      filters: Filters,
+      serchTerm: newSearchTerm
+    }
+    setSkip(0)
+    setSearchTerm(newSearchTerm)
+    getProducts(body)
+  }
+
+
   return (
       <div style={{width: '75%', margin: '3rem auto'}}>
         <div style={{textAlign: 'center'}}>
@@ -132,6 +144,11 @@ function LandingPage() {
           </Col>
         </Row>
         {/* Search */}
+        <div style={{display: 'flex', justifyContent: 'flex-end', margin: '1rem auto'}}>
+          <SearchFeature 
+            refreshFunction={updateSearchTerm}
+          />
+        </div>
         {/* Cards  */}
 
         <Row gutter={[16, 16]}>
