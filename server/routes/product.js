@@ -3,11 +3,12 @@ const router = express.Router();
 const multer = require('multer');
 const {Product} = require('../models/Product');
 
+
 //=================================
 //             Product
 //=================================
 
-const storage = multer.diskStorage({
+const storage = multer.diskStorage({  
   destination: function (req, file, cb) {
     cb(null, 'uploads/')
   },
@@ -30,7 +31,6 @@ router.post('/image', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-
   // 받아온 정보를 DB에 넣어준다.
   const product = new Product(req.body)
 
@@ -40,8 +40,7 @@ router.post('/', (req, res) => {
   })
 })
 
-router.put('/', (req, res) => {
-
+router.post('/product_by_id', (req, res) => {
   // 받아온 정보를 DB에 넣어준다.
   const product = new Product(req.body)
 
@@ -50,11 +49,43 @@ router.put('/', (req, res) => {
     return res.status(200).json({success: true})
   })
 })
+
+router.patch('/edit/:productId', (req, res) => {
+  const {productId} = req.params
+  const Body = req.body
+
+  Product.findOne({ _id: productId }, (err, product) => {
+    if(err) return res.status(400).json({success: false});
+    
+    product.title= Body.title
+    product.description= Body.description
+    product.price= Body.price
+    product.region= Body.region
+    product.image= Body.image
+    product.save((err, next) => {
+      if(err) return res.status(400).json({success: false})
+      return res.status(200).json({ success: true, next })
+    })
+  })
+})
+
+router.delete('/:productId', (req, res, next) => {
+  const {productId} = req.params
+  
+  Product.findOneAndDelete({_id: productId}).exec((err, doc) => {
+    if(err) return res.status(400).json({success: false, err})
+    return res.status(200).json({
+      success: true,
+      doc
+    })
+  })
+})
+
+
 
 router.post('/products', (req, res) => {
 
   // product collection에 들어있는 모든 상품 점보 가져오기
-  
   let limit = req.body.limit ? parseInt(req.body.limit) : 50;
   let skip = req.body.skip ? parseInt(req.body.skip) : 0;
   let term = req.body.searchTerm
@@ -86,7 +117,7 @@ router.post('/products', (req, res) => {
         if(err) return res.status(400).json({success: false, err})
         return res.status(200).json({
           success: true, productInfo,
-          postSize: productInfo.length 
+          postSize: productInfo.length
         })
       })
   } else {
@@ -117,7 +148,6 @@ router.get('/product_by_id', (req, res) => {
       return res.status(200).send({success: true, product})
     })
 })
-
 
 
 module.exports = router;

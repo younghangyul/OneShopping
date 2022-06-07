@@ -3,7 +3,6 @@ import axios from 'axios';
 import ProductImage from './Sectoins/ProductImage';
 import ProductInfo from './Sectoins/ProductInfo';
 import { Row, Col, Button } from 'antd';
-import { removeItem } from '../../../_actions/user_actions';
 
 function DetailProductPage(props) {
   
@@ -15,20 +14,27 @@ function DetailProductPage(props) {
     axios.get(`/api/product/product_by_id?id=${ productId }&type=single`)
       .then(response => {
         if(response.data.success) {
-          setProduct(response.data.product[0])
+          setProduct(response.data.product[0]);
         } else {
           alert('상세정보 가져오기 실패')
         }
       })
   }, [])
-
-  // let removeProduct = (productId) => {
-  //   dispatch(removeItem(productId))
-  //     .then(response => {
-
-  //     })
-  // }
   
+  const deleteProduct = (event) => {
+    event.preventDefault();
+
+    axios.delete(`/api/product/${productId}`)
+      .then(response => {
+        if(response.data.success) {
+          alert('게시물이 삭제되었습니다.')
+          props.history.push('/')
+        } else {
+          alert('게시물 삭제에 실패했습니다.')
+        }
+      })
+  }
+
   return (
     <div style = {{ width: '100%', padding: '3rem 4rem' }}>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -42,8 +48,8 @@ function DetailProductPage(props) {
           </Button>
         </a>
         &nbsp;&nbsp;
-        <Button size='large' shape='round' type='danger'>
-            Remove
+          <Button size='large' shape='round' type='danger' onClick={deleteProduct}>
+              Remove
           </Button>
       </div>
       <br /><br />

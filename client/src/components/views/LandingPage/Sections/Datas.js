@@ -1,4 +1,4 @@
-const continents = [
+const region = [
   {
     "_id": 1,
     "name": "신촌"
@@ -13,11 +13,11 @@ const continents = [
   },
   {
     "_id": 4,
-    "name": "기숙사: 모시래"
+    "name": "기숙사-모시래"
   },
   {
     "_id": 5,
-    "name": "기숙사: 해오름"
+    "name": "기숙사-해오름"
   }
 ]
 
@@ -30,32 +30,32 @@ const price = [
   },
   {
     "_id": 1,
-    "name": "0 - 199",
-    "array": [0, 199]
+    "name": "0원 - 1000원",
+    "array": [0, 1000]
   },
   {
     "_id": 2,
-    "name": "200 - 249",
-    "array": [200, 249]
+    "name": "1001원 - 5000원",
+    "array": [1001, 5000]
   },
   {
     "_id": 3,
-    "name": "250 - 279",
-    "array": [250, 279]
+    "name": "5001원 - 10000원",
+    "array": [5001, 10000]
   },
   {
     "_id": 4,
-    "name": "280 - 299",
-    "array": [280, 299]
+    "name": "10001원 - 30000원",
+    "array": [10001, 30000]
   },
   {
     "_id": 5,
-    "name": "More than 300",
-    "array": [300, 1111111]
+    "name": "30000원 이상",
+    "array": [30001, 11111111]
   }
 ]
 
 export {
-  continents,
+  region,
   price
 }

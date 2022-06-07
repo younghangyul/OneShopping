@@ -5,7 +5,7 @@ import Axios from 'axios'
 
 const { TextArea } = Input;
 
-const Continents = [
+const regions = [
   {key:1, value: "신촌"},
   {key:2, value: "모시래"},
   {key:3, value: "단월"},
@@ -17,8 +17,6 @@ function EditProduct(props) {
   
   const productId = props.match.params.productId
 
-  // const [Product, setProduct] = useState({})
-
   useEffect(() => {
     Axios.get(`/api/product/product_by_id?id=${ productId }&type=single`)
       .then(response => {
@@ -26,7 +24,7 @@ function EditProduct(props) {
           setTitle(response.data.product[0].title)
           setDescription(response.data.product[0].description)
           setPrice(response.data.product[0].price)
-          setContinent(response.data.product[0].continent)
+          setregion(response.data.product[0].region)
         } else {
           alert('상세정보 가져오기 실패')
         }
@@ -36,7 +34,7 @@ function EditProduct(props) {
   const [Title, setTitle] = useState("")
   const [Description, setDescription] = useState("")
   const [Price, setPrice] = useState(0)
-  const [Continent, setContinent] = useState(1)
+  const [Region, setregion] = useState(1)
   const [Images, setImages] = useState([])
 
   const titleChangeHandler = (event) => {
@@ -45,11 +43,11 @@ function EditProduct(props) {
   const descriptionChangeHandler = (event) => {
     setDescription(event.currentTarget.value)
   }
-  const priceChangeHandler = (event) => {
+  const priceChangeHandler = (event   ) => {
     setPrice(event.currentTarget.value)
   }
-  const continentChangeHandler = (event) => {
-    setContinent(event.currentTarget.value)
+  const regionChangeHandler = (event) => {
+    setregion(event.currentTarget.value)
   }
 
   const updateImages = (newImages) => {
@@ -59,10 +57,6 @@ function EditProduct(props) {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    if(!Title || !Description || !Price || !Continent || !Images) {
-      return alert('모든 값을 넣어야 합니다.')
-    }
-
     // 서버에 채운 값을 request로 보낸다.
     const body = {
       writer: props.user.userData._id, // 로그인 된 사람의 ID
@@ -70,10 +64,10 @@ function EditProduct(props) {
       description: Description,
       price: Price,
       images: Images,
-      continent: Continent
+      region: Region
     }
     
-    Axios.put('/api/product', body)
+    Axios.patch(`/api/product/edit/${productId}`, body)
       .then(response => {
         if(response.data.success) {
           alert('게시물 수정에 성공했습니다 :)')
@@ -83,6 +77,7 @@ function EditProduct(props) {
         }
       })
   }
+  
 
   return (
     <div style={{ maxWidth: '700px', margin: '2rem auto '}}>
@@ -109,8 +104,8 @@ function EditProduct(props) {
         <Input type="number" onChange={priceChangeHandler} value={Price} />
         <br />
         <br />
-        <select onChange={continentChangeHandler} value={Continent}>
-          {Continents.map(item => (
+        <select onChange={regionChangeHandler} value={Region}>
+          {regions.map(item => (
             <option key={item.key} value={item.key}>{item.value}</option>
           ))}
         </select>

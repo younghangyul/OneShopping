@@ -5,7 +5,7 @@ import Axios from 'axios'
 
 const { TextArea } = Input;
 
-const Continents = [
+const Regoin = [
   {key:1, value: "신촌"},
   {key:2, value: "모시래"},
   {key:3, value: "단월"},
@@ -19,7 +19,7 @@ function UploadProductPage(props) {
   const [Title, setTitle] = useState("")
   const [Description, setDescription] = useState("")
   const [Price, setPrice] = useState(0)
-  const [Continent, setContinent] = useState(1)
+  const [Region, setRegion] = useState(1)
   const [Images, setImages] = useState([])
 
   const titleChangeHandler = (event) => {
@@ -31,8 +31,8 @@ function UploadProductPage(props) {
   const priceChangeHandler = (event) => {
     setPrice(event.currentTarget.value)
   }
-  const continentChangeHandler = (event) => {
-    setContinent(event.currentTarget.value)
+  const regionChangeHandler = (event) => {
+    setRegion(event.currentTarget.value)
   }
 
   const updateImages = (newImages) => {
@@ -42,7 +42,7 @@ function UploadProductPage(props) {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    if(!Title || !Description || !Price || !Continent || !Images) {
+    if(!Title || !Description || !Price || !Region || !Images) {
       return alert('모든 값을 넣어야 합니다.')
     }
 
@@ -53,7 +53,7 @@ function UploadProductPage(props) {
       description: Description,
       price: Price,
       images: Images,
-      continent: Continent
+      region: Region
     }
     
     Axios.post('/api/product', body)
@@ -92,8 +92,8 @@ function UploadProductPage(props) {
         <Input type="number" onChange={priceChangeHandler} value={Price}/>
         <br />
         <br />
-        <select onChange={continentChangeHandler} value={Continent}>
-          {Continents.map(item => (
+        <select onChange={regionChangeHandler} value={Region}>
+          {Regoin.map(item => (
             <option key={item.key} value={item.key}>{item.value}</option>
           ))}
         </select>

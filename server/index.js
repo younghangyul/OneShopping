@@ -5,6 +5,7 @@ const cors = require('cors')
 
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const methodOverride = require('method-override');
 
 const config = require("./config/key");
 
@@ -32,10 +33,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(methodOverride());
 
 app.use('/api/users', require('./routes/users'));
 app.use('/api/product', require('./routes/product'));
-
 app.use('/uploads', express.static('uploads'));
 
 if (process.env.NODE_ENV === "production") {
