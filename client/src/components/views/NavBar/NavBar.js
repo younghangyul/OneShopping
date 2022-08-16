@@ -17,13 +17,13 @@ function NavBar() {
 
   return (
     <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
-      <div className="menu__logo">
-        <a href="/">SHOP</a>
+      <div className="menu__logo" style={{ width: '200px' }}>
+        <a href="/">KU 건국마켓</a>
       </div>
       <div className="menu__container">
-        <div className="menu_left">
+        {/* <div className="menu_left">
           <LeftMenu mode="horizontal" />
-        </div>
+        </div> */}
         <div className="menu_rigth">
           <RightMenu mode="horizontal" />
         </div>

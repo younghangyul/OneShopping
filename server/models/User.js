@@ -22,11 +22,14 @@ const userSchema = mongoose.Schema({
         type:String,
         maxlength: 50
     },
+    images: {
+      type: Array,
+      default: []
+    },
     role : {
         type:Number,
         default: 0 
     },
-    image: String,
     token : {
         type: String,
     },
@@ -46,7 +49,7 @@ userSchema.pre('save', function( next ) {
     
             bcrypt.hash(user.password, salt, function(err, hash){
                 if(err) return next(err);
-                user.password = hash 
+                user.password = hash
                 next()
             })
         })

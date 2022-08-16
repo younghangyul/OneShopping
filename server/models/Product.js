@@ -36,6 +36,16 @@ const productSchema = mongoose.Schema({
     }
 }, {timestamps: true})
 
+// title을 description 보다 5배 중요시 여겨서 검색하겠다.
+productSchema.index({
+  title: 'text',
+  description: 'text',
+}, {
+  weights: {
+    title: 5,
+    description: 1
+  }
+})
 
 const Product = mongoose.model('Product', productSchema);
 

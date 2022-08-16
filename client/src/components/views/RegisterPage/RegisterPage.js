@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import moment from "moment";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { registerUser } from "../../../_actions/user_actions";
 import { useDispatch } from "react-redux";
+import ImageUpload from "../../utils/ImageUpload";
 
 import {
   Form,
@@ -36,6 +37,13 @@ const tailFormItemLayout = {
 
 function RegisterPage(props) {
   const dispatch = useDispatch();
+
+  const [Images, setImages] = useState()
+
+  const updateImages = (newImages) => {
+    setImages(newImages)
+  }
+
   return (
 
     <Formik
@@ -49,8 +57,8 @@ function RegisterPage(props) {
       validationSchema={Yup.object().shape({
         name: Yup.string()
           .required('Name is required'),
-        lastName: Yup.string()
-          .required('Last Name is required'),
+        // lastName: Yup.string()
+        //   .required('Last Name is required'),
         email: Yup.string()
           .email('Email is invalid')
           .required('Email is required'),
@@ -101,6 +109,8 @@ function RegisterPage(props) {
             <h2>Sign up</h2>
             <Form style={{ minWidth: '375px' }} {...formItemLayout} onSubmit={handleSubmit} >
 
+              <ImageUpload refreshFunction={updateImages} />
+
               <Form.Item required label="Name">
                 <Input
                   id="name"
@@ -118,7 +128,7 @@ function RegisterPage(props) {
                 )}
               </Form.Item>
 
-              <Form.Item required label="Last Name">
+              {/* <Form.Item required label="Last Name">
                 <Input
                   id="lastName"
                   placeholder="Enter your Last Name"
@@ -133,7 +143,7 @@ function RegisterPage(props) {
                 {errors.lastName && touched.lastName && (
                   <div className="input-feedback">{errors.lastName}</div>
                 )}
-              </Form.Item>
+              </Form.Item> */}
 
               <Form.Item required label="Email" hasFeedback validateStatus={errors.email && touched.email ? "error" : 'success'}>
                 <Input
