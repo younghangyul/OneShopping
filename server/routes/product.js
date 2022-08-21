@@ -8,7 +8,7 @@ const {Product} = require('../models/Product');
 //             Product
 //=================================
 
-const storage = multer.diskStorage({  
+const storage = multer.diskStorage({    
   destination: function (req, file, cb) {
     cb(null, 'uploads/')
   },

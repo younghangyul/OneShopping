@@ -38,18 +38,11 @@ const tailFormItemLayout = {
 function RegisterPage(props) {
   const dispatch = useDispatch();
 
-  const [Images, setImages] = useState()
-
-  const updateImages = (newImages) => {
-    setImages(newImages)
-  }
-
   return (
 
     <Formik
       initialValues={{
         email: '',
-        lastName: '',
         name: '',
         password: '',
         confirmPassword: ''
@@ -57,8 +50,6 @@ function RegisterPage(props) {
       validationSchema={Yup.object().shape({
         name: Yup.string()
           .required('Name is required'),
-        // lastName: Yup.string()
-        //   .required('Last Name is required'),
         email: Yup.string()
           .email('Email is invalid')
           .required('Email is required'),
@@ -108,9 +99,7 @@ function RegisterPage(props) {
           <div className="app">
             <h2>Sign up</h2>
             <Form style={{ minWidth: '375px' }} {...formItemLayout} onSubmit={handleSubmit} >
-
-              <ImageUpload refreshFunction={updateImages} />
-
+              
               <Form.Item required label="Name">
                 <Input
                   id="name"
@@ -127,23 +116,6 @@ function RegisterPage(props) {
                   <div className="input-feedback">{errors.name}</div>
                 )}
               </Form.Item>
-
-              {/* <Form.Item required label="Last Name">
-                <Input
-                  id="lastName"
-                  placeholder="Enter your Last Name"
-                  type="text"
-                  value={values.lastName}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.lastName && touched.lastName ? 'text-input error' : 'text-input'
-                  }
-                />
-                {errors.lastName && touched.lastName && (
-                  <div className="input-feedback">{errors.lastName}</div>
-                )}
-              </Form.Item> */}
 
               <Form.Item required label="Email" hasFeedback validateStatus={errors.email && touched.email ? "error" : 'success'}>
                 <Input

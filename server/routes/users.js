@@ -5,6 +5,7 @@ const { User } = require("../models/User");
 
 const { auth } = require("../middleware/auth");
 
+
 //=================================
 //             User
 //=================================
@@ -55,6 +56,15 @@ router.post("/register", (req, res) => {
             success: true
         });
     });
+});
+
+router.post("/user", (req, res) => {
+  // users 콜렉션에 있는 유저 정보 가져오기
+  User.findOne({ _id: req.body.userId })
+    .exec((err, userInfo) => {
+      if(err) return res.status(400).json({success: false, err})
+      return res.status(200).json({success: true, userInfo})
+    })
 });
 
 router.post("/login", (req, res) => {
