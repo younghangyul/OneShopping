@@ -4,6 +4,7 @@ const multer = require('multer');
 const { User } = require("../models/User");
 
 const { auth } = require("../middleware/auth");
+const { response } = require('express');
 
 
 //=================================
@@ -65,6 +66,23 @@ router.post("/user", (req, res) => {
       if(err) return res.status(400).json({success: false, err})
       return res.status(200).json({success: true, userInfo})
     })
+});
+
+router.patch("/profile", (req, res) => {
+
+  const Body = req.body
+  const userId = req.body.userId
+
+  User.findOne({_id: userId}, (err, user) => {
+    if(err) return res.status(400).json({success: false});
+
+    user.images= Body.images;
+    
+    user.save((err, next) => {
+      if(err) return res.status(400).json({success: false})
+      return res.status(200).json({ success: true, next })
+    })
+  })
 });
 
 router.post("/login", (req, res) => {
