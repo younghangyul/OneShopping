@@ -63,6 +63,28 @@ function MyPage(props) {
       })
   }
 
+  // const [update, setUpdate] = useState(true);
+  // let updateButton, cancleButton = null;
+
+  // const onClickUpdate = () => {
+  //   setUpdate(!update);
+  // }
+
+  // const onClickSave = () => {
+
+  // }
+
+  // const onClickCancle = () => {
+  //   props.history.go(1);
+  //   setUpdate(!update);
+  // }
+
+  // if(update) {
+  //   updateButton = <Button htmlType='submit' onClick={onClickUpdate}>수정</Button>
+  // } else {
+  //   updateButton = <Button htmlType='submit' onClick={submitHandler}>저장</Button>
+  //   cancleButton = <Button htmlType='submit' onClick={onClickCancle}>취소</Button>
+  // }
 
   return (
     <div style = {{ maxWidth: '700px', margin: '2rem auto' }}>
@@ -85,6 +107,8 @@ function MyPage(props) {
           <Button htmlType='submit'>
               저장
           </Button>
+          {/* {updateButton}
+          {cancleButton} */}
         </Form>
       </div>
     </div>
@@ -92,8 +116,6 @@ function MyPage(props) {
 }
 
 export default MyPage
-
-
 
 
 
