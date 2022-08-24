@@ -8,7 +8,6 @@ function SearchFeature(props) {
   const [SearchTerm, setSearchTerm] = useState("")
 
   const searchHandler = (event) => {
-    console.log(event.currentTarget.value)
     setSearchTerm(event.currentTarget.value) //타이핑 할 때마다 SearchTerm 값 변경
     props.refreshFunction(event.currentTarget.value)
   } 

@@ -53,7 +53,7 @@ router.post('/product_by_id', (req, res) => {
 router.patch('/edit/:productId', (req, res) => {
   const {productId} = req.params
   const Body = req.body
-
+  
   Product.findOne({ _id: productId }, (err, product) => {
     if(err) return res.status(400).json({success: false});
     
@@ -62,6 +62,7 @@ router.patch('/edit/:productId', (req, res) => {
     product.price= Body.price
     product.region= Body.region
     product.image= Body.image
+    
     product.save((err, next) => {
       if(err) return res.status(400).json({success: false})
       return res.status(200).json({ success: true, next })

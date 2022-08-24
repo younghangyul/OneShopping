@@ -2,11 +2,10 @@ import React, {useEffect, useState, useRef} from 'react';
 import axios from 'axios';
 import {Avatar, Button, Form} from 'antd';
 
-function MyPage() {
+function MyPage(props) {
   
   const [UserInfo, setUserInfo] = useState("")
-
-
+ 
   useEffect(() => {
     axios.post('/api/users/user', {
         userId: localStorage.userId
@@ -20,10 +19,17 @@ function MyPage() {
       })
   }, [])
 
-  // if문   null > 기본 / UserInfo.Image
-  const [Image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
-  const fileInput = useRef(null)
 
+  
+  const [Image, setImage] = useState('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')
+  const fileInput = useRef(null)
+  
+  const confirmImage = UserInfo.images && UserInfo.images.length > 0 ?  UserInfo.images[0] : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+  
+  // const onClickSave = () => {
+  //   setImage(confirmImage)
+  // }
+  
   const onChange = (e) => {
     if(e.target.files[0]) {
     //화면에 프로필 사진 표시
@@ -41,24 +47,20 @@ function MyPage() {
     event.preventDefault();
 
     // 서버에 채운 값을 request로 보낸다.
-    // const body = {
-    //   writer: props.user.userData._id, // 로그인 된 사람의 ID
-    //   title: Title,
-    //   description: Description,
-    //   price: Price,
-    //   images: Images,
-    //   region: Region
-    // }
+    const body = {
+      userId: UserInfo._id,
+      images: Image
+    }
     
-    // axios.post('/api/product', body)
-    //   .then(response => {
-    //     if(response.data.success) {
-    //       alert('상품 업로드에 성공했습니다.')
-    //       props.history.push('/')
-    //     } else {
-    //       alert('상품 업로드에 실패했습니다.')
-    //     }
-    //   })
+    axios.patch('/api/users/profile', body)
+      .then(response => {
+        if(response.data.success) {
+          alert('내 정보가 수정됐습니다 :)')
+          props.history.push('/users/myPage')
+        } else {
+          alert('내 정보 수정에 실패했습니다 :(')
+        }
+      })
   }
 
 
@@ -68,8 +70,8 @@ function MyPage() {
         <Form onSubmitCapture={submitHandler}>
           <h2>내 정보</h2>
           <Avatar 
-            src={Image} 
-            style={{margin:'20px'}} 
+            src={Image}
+            style={{margin:'20px'}}
             size={200}
             onClick={()=>{fileInput.current.click()}}/>
           <input 
@@ -90,3 +92,9 @@ function MyPage() {
 }
 
 export default MyPage
+
+
+
+
+
+
