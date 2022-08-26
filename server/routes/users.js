@@ -86,6 +86,23 @@ router.patch("/profile", (req, res) => {
   })
 });
 
+router.patch("/delete", (req, res) => {
+
+  const Body = req.body
+  const userId = req.body.userId
+
+  User.findOne({_id: userId}, (err, user) => {
+    if(err) return res.status(400).json({success: false});
+
+    user.images= Body.images;
+        
+    user.save((err, next) => {
+      if(err) return res.status(400).json({success: false})
+      return res.status(200).json({ success: true, next })
+    })
+  })
+});
+
 router.post("/login", (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
         if (!user)
