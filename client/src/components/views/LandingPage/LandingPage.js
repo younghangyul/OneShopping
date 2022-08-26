@@ -13,7 +13,7 @@ function LandingPage() {
   
   const [Products, setProducts] = useState([])
   const [Skip, setSkip] = useState(0)
-  const [Limit, setLimit] = useState(12)
+  const [Limit, setLimit] = useState(20)
   const [PostSize, setPostSize] = useState(0)
   const [Filters, setFilters] = useState({
     region: [],
