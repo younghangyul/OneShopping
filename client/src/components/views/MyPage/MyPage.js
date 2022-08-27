@@ -35,41 +35,17 @@ function MyPage(props) {
   
   useEffect(() => {
     let body = {
-      skip: Skip,
-      limit: Limit,
       userId: localStorage.userId
     }
-    getProducts(body)
-  }, [])
-
-  const getProducts = (body) => {
     axios.post('/api/product/sellingProduct', body)
-      .then(response => {
-        if (response.data.success) {
-          if (body.loadMore) {
-            setProducts([...Products, ...response.data.productInfo])
-          } else {
-            setProducts(response.data.productInfo)
-          }
-          setPostSize(response.data.postSize)
-        } else {
-          alert('상품을 가져오지 못했습니다 :(')
-        }
-      })
-  }
-  
-  const loadMoreHandler = () => {
-    let skip = Skip + Limit
-    
-    let body = {
-      skip: skip,
-      limit: Limit,
-      loadMore: true
-    }
-    
-    getProducts(body)
-    setSkip(skip)
-  }
+    .then(response => {
+      if (response.data.success) {
+        setProducts(response.data.productInfo)
+      } else {
+        alert('상품을 가져오지 못했습니다 :(')
+      }
+    })
+  }, [])
   
   const onChange = (e) => {
     if(e.target.files[0]) {
@@ -190,7 +166,7 @@ function MyPage(props) {
         </Row>
         {PostSize >= Limit &&
           <div style={{display: 'flex', justifyContent: 'center'}}>
-            <Button onClick={loadMoreHandler}>더보기</Button>
+            <Button >더보기</Button>
           </div>
         }
       </div>
