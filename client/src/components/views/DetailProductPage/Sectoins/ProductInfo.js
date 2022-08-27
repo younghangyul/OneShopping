@@ -6,7 +6,7 @@ function ProductInfo(props) {
   return (
     <div>
       <Descriptions title="Info" bordered>
-      {/* <Descriptions.Item label="판매자">{props.detail.writer.name}</Descriptions.Item> */}
+      <Descriptions.Item label="판매자">{props.writer.name}</Descriptions.Item>
       <Descriptions.Item label="Price">{props.detail.price}</Descriptions.Item>
       <Descriptions.Item label="Description">{props.detail.description}</Descriptions.Item>
       </Descriptions>
