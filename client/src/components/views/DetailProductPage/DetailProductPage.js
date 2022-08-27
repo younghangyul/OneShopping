@@ -9,6 +9,7 @@ function DetailProductPage(props) {
   const productId = props.match.params.productId
 
   const [Product, setProduct] = useState({})
+  
 
   useEffect(() => {
     axios.get(`/api/product/product_by_id?id=${ productId }&type=single`)
@@ -19,8 +20,8 @@ function DetailProductPage(props) {
           alert('상세정보 가져오기 실패')
         }
       })
-  }, [])
-  
+    }, [])
+
   const deleteProduct = (event) => {
     event.preventDefault();
 
