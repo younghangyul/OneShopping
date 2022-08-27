@@ -9,13 +9,14 @@ function DetailProductPage(props) {
   const productId = props.match.params.productId
 
   const [Product, setProduct] = useState({})
+  const [Writer, setWriter] = useState({})
   
-
   useEffect(() => {
     axios.get(`/api/product/product_by_id?id=${ productId }&type=single`)
       .then(response => {
         if(response.data.success) {
           setProduct(response.data.product[0]);
+          setWriter(response.data.product[0].writer);
         } else {
           alert('상세정보 가져오기 실패')
         }
@@ -60,7 +61,7 @@ function DetailProductPage(props) {
           <ProductImage detail={Product}/>
         </Col>
         <Col lg={12} sm={24}>
-          <ProductInfo detail={Product}/>
+          <ProductInfo detail={Product} writer={Writer}/>
         </Col>
       </Row>
       
