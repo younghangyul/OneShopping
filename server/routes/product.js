@@ -75,24 +75,17 @@ router.delete('/:productId', (req, res, next) => {
   
   Product.findOneAndDelete({_id: productId}).exec((err, doc) => {
     if(err) return res.status(400).json({success: false, err})
-    return res.status(200).json({
-      success: true,
-      doc
-    })
+    return res.status(200).json({ success: true, doc })
   })
 })
 
 router.post('/sellingProduct', (req, res) => {
   const userId = req.body.userId
-  let limit = req.body.limit ? parseInt(req.body.limit) : 20;
-  let skip = req.body.skip ? parseInt(req.body.skip) : 0;
   
   Product.find({writer: userId})
-    .skip(skip)
-    .limit(limit)
     .exec((err, productInfo) => {
       if (err) return res.status(400).json({success: false, err})
-      return res.status(200).json({success: true, productInfo, postSize: productInfo.length })
+      return res.status(200).json({success: true, productInfo})
     })
 })
 
