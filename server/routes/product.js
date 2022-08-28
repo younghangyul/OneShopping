@@ -82,13 +82,13 @@ router.delete('/:productId', (req, res, next) => {
 router.patch('/sold', (req, res) => {
   const productId = req.body.productId
 
-  Product.find({_id: productId}).exec((err, product) => {
+  Product.findOne({_id: productId}).exec((err, product) => {
     if(err) return res.status(400).json({success: false, err})
 
     product.sold= true
-    product.save((err, next) => {
+    product.save((err, product) => {
       if(err) return res.status(400).json({success: false})
-      return res.status(200).json({ success: true, next })
+      return res.status(200).json({ success: true, product })
     })
   })
 })
