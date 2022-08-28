@@ -40,7 +40,7 @@ function DetailProductPage(props) {
   const soldProduct = (event) => {
     event.preventDefault();
 
-    let body = {
+    const body = {
       productId : productId
     }
 
@@ -48,7 +48,7 @@ function DetailProductPage(props) {
       .then(response => {
         if(response.data.success) {
           
-          console.log(response.data.product[0].sold)
+          console.log(response.data.product.sold)
           alert('판매완료 처리 되었습니다 :)')
           // props.history.push('/')
         } else {
