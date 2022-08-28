@@ -21,6 +21,12 @@ const region = [
   }
 ]
 
+const sold = [
+  {
+    '_id': 1,
+    'name': '판매완료'
+  }
+]
 
 const price = [
   {
@@ -57,5 +63,6 @@ const price = [
 
 export {
   region,
-  price
+  price,
+  sold
 }

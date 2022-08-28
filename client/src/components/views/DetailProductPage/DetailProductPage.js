@@ -10,7 +10,7 @@ function DetailProductPage(props) {
 
   const [Product, setProduct] = useState({})
   const [Writer, setWriter] = useState({})
-  
+
   useEffect(() => {
     axios.get(`/api/product/product_by_id?id=${ productId }&type=single`)
       .then(response => {
@@ -37,6 +37,27 @@ function DetailProductPage(props) {
       })
   }
 
+  const soldProduct = (event) => {
+    event.preventDefault();
+
+    let body = {
+      productId : productId
+    }
+
+    axios.patch('/api/product/sold', body)
+      .then(response => {
+        if(response.data.success) {
+          
+          console.log(response.data.product[0].sold)
+          alert('판매완료 처리 되었습니다 :)')
+          // props.history.push('/')
+        } else {
+          alert('판매완료 처리 실패했습니다 :(')
+        }
+      })
+      
+  }
+
   return (
     <div style = {{ width: '100%', padding: '3rem 4rem' }}>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -50,9 +71,13 @@ function DetailProductPage(props) {
           </Button>
         </a>
         &nbsp;&nbsp;
-          <Button size='large' shape='round' type='danger' onClick={deleteProduct}>
-              Remove
-          </Button>
+        <Button size='large' shape='round' type='danger' onClick={deleteProduct}>
+            Remove
+        </Button>
+        &nbsp;&nbsp;
+        <Button size='large' shape='round' onClick={soldProduct}>
+            Sold
+        </Button>
       </div>
       <br /><br />
 
