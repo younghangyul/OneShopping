@@ -5,8 +5,9 @@ import Meta from 'antd/lib/card/Meta';
 import ImageSlider from '../../utils/imageSlider';
 import CheckBox from '../LandingPage/Sections/CheckBox';
 import RadioBox from '../LandingPage/Sections/RadioBox';
+import Sold from './Sections/Sold';
 import SearchFeature from './Sections/SearchFeature';
-import { region, price } from './Sections/Datas'
+import { region, price, sold } from './Sections/Datas'
 import { Link } from 'react-router-dom';
 
 function LandingPage() {
@@ -17,7 +18,8 @@ function LandingPage() {
   const [PostSize, setPostSize] = useState(0)
   const [Filters, setFilters] = useState({
     region: [],
-    price: []
+    price: [],
+    sold: []
   })
   const [SearchTerm, setSearchTerm] = useState("")
 
@@ -141,7 +143,10 @@ function LandingPage() {
             <RadioBox list={price} handleFilters={filters => handleFilters(filters, 'price')} />
           </Col>
         </Row>
-      
+        <Row>
+          <Sold list={sold} handleFilters={filters => handleFilters(filters, 'sold')} />
+        </Row>
+
         {/* Search */}
         <div style ={{display: 'flex', justifyContent: 'flex-end', margin: '1rem auto'}}>
           <SearchFeature 
