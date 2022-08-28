@@ -71,12 +71,12 @@ function DetailProductPage(props) {
           </Button>
         </a>
         &nbsp;&nbsp;
-        <Button size='large' shape='round' type='danger' onClick={deleteProduct}>
-            Remove
-        </Button>
-        &nbsp;&nbsp;
         <Button size='large' shape='round' onClick={soldProduct}>
             Sold
+        </Button>
+        &nbsp;&nbsp;
+        <Button size='large' shape='round' type='danger' onClick={deleteProduct}>
+            Remove
         </Button>
       </div>
       <br /><br />
