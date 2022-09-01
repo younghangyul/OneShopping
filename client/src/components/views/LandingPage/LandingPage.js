@@ -30,7 +30,6 @@ function LandingPage() {
     }
   getProducts(body)
   }, [])
-
   
   const getProducts = (body) => {
     axios.post('/api/product/products', body)
@@ -61,19 +60,22 @@ function LandingPage() {
     setSkip(skip)
   }
 
-  
+  let test = null;
+
   const renderCards = Products.map((product, index) => {
+    if(product.sold === 1) test = '판매완료'; else test = `${product.price}원`
     return <Col lg={6} md={8} xs={24} key={index}>
       <Card
         cover={ <Link to={`/product/${ product._id }` }><ImageSlider images={ product.images } /></Link> }
       >
         <Meta 
           title={product.title}
-          description={`${product.price}원`}
+          description={test}
         />
       </Card>
     </Col>
   })
+  
   
   const showFilteredResults = (filters) => {
    
