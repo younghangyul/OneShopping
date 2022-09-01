@@ -30,8 +30,8 @@ function LandingPage() {
     }
   getProducts(body)
   }, [])
-  
 
+  
   const getProducts = (body) => {
     axios.post('/api/product/products', body)
     .then(response => {
@@ -99,6 +99,18 @@ function LandingPage() {
     }
     return array;
   }
+  
+  const handleSold = (value) => {
+    const data = sold;
+    let confirm = [];
+
+    for(let key in data) {
+      if(data[key]._id === parseInt(value, 10)) {
+        confirm = data[key].sold;
+      }
+    }
+    return confirm;
+  }
 
   const handleFilters = (filters, category) => {
     const newFilters = {...Filters}
@@ -107,7 +119,17 @@ function LandingPage() {
       let priceValues = handlePrice(filters)
       newFilters[category] = priceValues
     }
+    if(category === 'sold') {
+      let soldValues = handleSold(filters)
+      newFilters[category] = soldValues
+    }
     showFilteredResults(newFilters)
+    setFilters(newFilters)
+  }
+
+  const ff = (filters, category) => {
+    const newFilters = {...Filters}
+    
     setFilters(newFilters)
   }
 
@@ -126,51 +148,42 @@ function LandingPage() {
   }
 
   return (
-      <div style={{width: '75%', margin: '3rem auto'}}>
-        <div style={{textAlign: 'center'}}>
-          <h2>Shopping! <Icon type="shop"/> </h2>
-        </div>
-
-        {/* Filter */}
-
-        <Row gutter={[16, 16]}>
-          <Col lg={12} xs={24}>
-            {/* CheckBox */}
-            <CheckBox list={region} handleFilters={filters => handleFilters(filters, 'region')} />
-          </Col>
-          <Col lg={12} xs={24}>
-            {/* RadioBox */}
-            <RadioBox list={price} handleFilters={filters => handleFilters(filters, 'price')} />
-          </Col>
-        </Row>
-        <Row>
-          <Sold list={sold} handleFilters={filters => handleFilters(filters, 'sold')} />
-        </Row>
-
-        {/* Search */}
-        <div style ={{display: 'flex', justifyContent: 'flex-end', margin: '1rem auto'}}>
-          <SearchFeature 
-            refreshFunction={updateSearchTerm}
-          />
-        </div>
-
-        {/* Cards  */}
-
-        <Row gutter={[16, 16]}>
-          {renderCards}
-        </Row>
-
-        <br />
-
-        {PostSize > Limit &&
-          <div style={{ display: 'flex', justifyContent: 'center'}}>
-            <button onClick={loadMoreHandler}>더보기</button>
-          </div>
-        }
-
-
+    <div style={{width: '75%', margin: '3rem auto'}}>
+      <div style={{textAlign: 'center'}}>
+        <h2>Shopping! <Icon type="shop"/> </h2>
       </div>
-    )
+      {/* Filter */}
+      <Row gutter={[16, 16]}>
+        <Col lg={12} xs={24}>
+          {/* CheckBox */}
+          <CheckBox list={region} handleFilters={filters => handleFilters(filters, 'region')} />
+        </Col>
+        <Col lg={12} xs={24}>
+          {/* RadioBox */}
+          <RadioBox list={price} handleFilters={filters => handleFilters(filters, 'price')} />
+        </Col>
+      </Row>
+      <Row>
+        <Sold list={sold} handleFilters={filters => handleFilters(filters, 'sold')} />
+      </Row>
+      {/* Search */}
+      <div style ={{display: 'flex', justifyContent: 'flex-end', margin: '1rem auto'}}>
+        <SearchFeature 
+          refreshFunction={updateSearchTerm}
+        />
+      </div>
+      {/* Cards  */}
+      <Row gutter={[16, 16]}>
+        {renderCards}
+      </Row>
+      <br />
+      {PostSize > Limit &&
+        <div style={{ display: 'flex', justifyContent: 'center'}}>
+          <button onClick={loadMoreHandler}>더보기</button>
+        </div>
+      }
+    </div>
+  )
 }
 
 export default LandingPage

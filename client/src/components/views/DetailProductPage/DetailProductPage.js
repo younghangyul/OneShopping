@@ -40,17 +40,15 @@ function DetailProductPage(props) {
   const soldProduct = (event) => {
     event.preventDefault();
 
-    let body = {
+    const body = {
       productId : productId
     }
 
     axios.patch('/api/product/sold', body)
       .then(response => {
         if(response.data.success) {
-          
-          console.log(response.data.product[0].sold)
           alert('판매완료 처리 되었습니다 :)')
-          // props.history.push('/')
+          props.history.push('/')
         } else {
           alert('판매완료 처리 실패했습니다 :(')
         }

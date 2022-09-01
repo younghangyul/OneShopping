@@ -82,13 +82,13 @@ router.delete('/:productId', (req, res, next) => {
 router.patch('/sold', (req, res) => {
   const productId = req.body.productId
 
-  Product.find({_id: productId}).exec((err, product) => {
+  Product.findOne({_id: productId}).exec((err, product) => {
     if(err) return res.status(400).json({success: false, err})
 
-    product.sold= true
-    product.save((err, next) => {
+    product.sold= 1
+    product.save((err, product) => {
       if(err) return res.status(400).json({success: false})
-      return res.status(200).json({ success: true, next })
+      return res.status(200).json({ success: true, product })
     })
   })
 })
@@ -113,6 +113,7 @@ router.post('/products', (req, res) => {
   let findArgs = {};
 
   for(let key in req.body.filters) {
+    console.log(req.body.filters)
     if(req.body.filters[key].length > 0) {
       if(key === 'price') {
         findArgs[key] = {
@@ -121,7 +122,11 @@ router.post('/products', (req, res) => {
           // Less then equal     1보다 작거나 같은
           $lte: req.body.filters[key][1]  
         }
-      } else {
+      }
+      else if(key === 'sold') {
+        findArgs[key] = req.body.filters[key]
+      }
+       else {
         findArgs[key] = req.body.filters[key]
       }
     }

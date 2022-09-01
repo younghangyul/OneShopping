@@ -23,8 +23,19 @@ const region = [
 
 const sold = [
   {
+    '_id': 0,
+    'name': '전체상품',
+    'sold': []
+  },
+  {
     '_id': 1,
-    'name': '판매완료'
+    'name': '판매중',
+    'sold': [0]
+  },
+  {
+    '_id': 2,
+    'name': '판매완료',
+    'sold': [1]
   }
 ]
 
