@@ -4,13 +4,20 @@ import FileUpload from '../../utils/FileUpload';
 import Axios from 'axios'
 
 const { TextArea } = Input;
-
+//남성의류, 여성의류, 도서, 디지털/가전, 스포츠/레저, 생활용품, 식료품, 뷰티/미용, 문구류, 액세서리, 티켓, 기타 
 const Regoin = [
-  {key:1, value: "신촌"},
-  {key:2, value: "모시래"},
-  {key:3, value: "단월"},
-  {key:4, value: "기숙사: 모시래"},
-  {key:5, value: "기숙사: 해오름"}
+  {key:1, value: "남성의류"},
+  {key:2, value: "여성의류"},
+  {key:3, value: "도서"},
+  {key:4, value: "디지털/가전"},
+  {key:5, value: "스포츠/레저"},
+  {key:6, value: "생활용품"},
+  {key:7, value: "식료품"},
+  {key:8, value: "뷰티/미용"},
+  {key:9, value: "문구류"},
+  {key:10, value: "액세서리"},
+  {key:11, value: "티켓"},
+  {key:12, value: "기타"}
 ]
 
 
@@ -84,19 +91,19 @@ function UploadProductPage(props) {
         <Input onChange={titleChangeHandler} value={Title}/>
         <br />
         <br />
-        <label>설명</label>
-        <TextArea onChange={descriptionChangeHandler} value={Description} />
+        <select onChange={regionChangeHandler} value={Region}>
+          {Regoin.map(item => (
+            <option key={item.key} value={item.key}>{item.value}</option>
+          ))}
+        </select>
         <br />
         <br />
         <label>가격(원)</label>
         <Input type="number" onChange={priceChangeHandler} value={Price}/>
         <br />
         <br />
-        <select onChange={regionChangeHandler} value={Region}>
-          {Regoin.map(item => (
-            <option key={item.key} value={item.key}>{item.value}</option>
-          ))}
-        </select>
+        <label>설명</label>
+        <TextArea onChange={descriptionChangeHandler} value={Description} />
         <br />
         <br />
         <Button htmlType='submit'>
