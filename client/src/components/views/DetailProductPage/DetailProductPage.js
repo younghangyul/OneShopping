@@ -47,10 +47,8 @@ function DetailProductPage(props) {
     axios.patch('/api/product/sold', body)
       .then(response => {
         if(response.data.success) {
-          
-          console.log(response.data.product.sold)
           alert('판매완료 처리 되었습니다 :)')
-          // props.history.push('/')
+          props.history.push('/')
         } else {
           alert('판매완료 처리 실패했습니다 :(')
         }
