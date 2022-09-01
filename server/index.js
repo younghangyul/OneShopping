@@ -3,6 +3,10 @@ const app = express();
 const path = require("path");
 const cors = require('cors')
 
+const http = require('http')
+const socketio = require('socket.io')
+const router = require('../server/routes/chat')
+
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const methodOverride = require('method-override');
@@ -56,7 +60,22 @@ if (process.env.NODE_ENV === "production") {
 
 
 const port = process.env.PORT || 5000
-
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`)
 });
+
+// 채팅 부분
+const Port = process.env.PORT || 4000
+
+const server = http.createServer(app)
+const io = socketio(server)
+app.use(cors())
+app.use(router)
+io.on('connection', (socket) => {
+  console.log('새로운 connectoin이 발생하였습니다.')
+  socket.on('join', ({ name, room }, callback) => {})
+  socket.on('disconnect', () => {
+    console.log('유저가 떠났어요.')
+  })
+})
+server.listen(Port, () => console.log(`서버가 ${Port} 에서 시작되었어요`))
