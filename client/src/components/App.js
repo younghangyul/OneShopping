@@ -12,6 +12,7 @@ import UploadProductPage from './views/UploadProductPage/UploadProductPage';
 import DetailProductPage from './views/DetailProductPage/DetailProductPage';
 import EditProduct from './views/DetailProductPage/EditProduct';
 import Chat from './views/ChattingPage/Chat/Chat';
+import Join from './views/ChattingPage/Join/Join';
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -25,6 +26,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Auth(LandingPage, null)} />
           <Route exact path="/chat" component={Auth(Chat, true)} />
+          <Route exact path="/join" component={Auth(Join, true)} />
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/users/myPage" component={Auth(MyPage, true)} />
