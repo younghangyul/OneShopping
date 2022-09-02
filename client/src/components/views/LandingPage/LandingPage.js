@@ -60,17 +60,28 @@ function LandingPage() {
     setSkip(skip)
   }
 
-  let test = null;
+  let test, test2 = null;
 
   const renderCards = Products.map((product, index) => {
-    if(product.sold === 1) test = '판매완료'; else test = `${product.price}원`
+    if(product.sold === 1) test = '판매완료'; 
+    else test = `즉시 입찰가  ${product.directPrice}원`
+    
+    if(product.sold === 1) test2 = '😄';
+    else test2 = `현재 입찰가  ${product.bidPrice}원`
+    
+    
     return <Col lg={6} md={8} xs={24} key={index}>
       <Card
         cover={ <Link to={`/product/${ product._id }` }><ImageSlider images={ product.images } /></Link> }
       >
         <Meta 
           title={product.title}
-          description={test}
+          description={[
+            <div>
+              <p>{test}</p>
+              <p>{test2}</p>
+            </div>
+          ]}
         />
       </Card>
     </Col>
@@ -126,12 +137,6 @@ function LandingPage() {
       newFilters[category] = soldValues
     }
     showFilteredResults(newFilters)
-    setFilters(newFilters)
-  }
-
-  const ff = (filters, category) => {
-    const newFilters = {...Filters}
-    
     setFilters(newFilters)
   }
 

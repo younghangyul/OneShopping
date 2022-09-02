@@ -4,8 +4,7 @@ import FileUpload from '../../utils/FileUpload';
 import Axios from 'axios'
 
 const { TextArea } = Input;
-//남성의류, 여성의류, 도서, 디지털/가전, 스포츠/레저, 생활용품, 식료품, 뷰티/미용, 문구류, 액세서리, 티켓, 기타 
-const Regoin = [
+const Categorys = [
   {key:1, value: "남성의류"},
   {key:2, value: "여성의류"},
   {key:3, value: "도서"},
@@ -25,8 +24,9 @@ function UploadProductPage(props) {
 
   const [Title, setTitle] = useState("")
   const [Description, setDescription] = useState("")
-  const [Price, setPrice] = useState(0)
-  const [Region, setRegion] = useState(1)
+  const [DirectPrice, setDirectPrice] = useState(0)
+  const [BidPrice, setBidPrice] = useState(0)
+  const [Category, setCategory] = useState(1)
   const [Images, setImages] = useState([])
 
   const titleChangeHandler = (event) => {
@@ -35,11 +35,14 @@ function UploadProductPage(props) {
   const descriptionChangeHandler = (event) => {
     setDescription(event.currentTarget.value)
   }
-  const priceChangeHandler = (event) => {
-    setPrice(event.currentTarget.value)
+  const DirectPriceChangeHandler = (event) => {
+    setDirectPrice(event.currentTarget.value)
   }
-  const regionChangeHandler = (event) => {
-    setRegion(event.currentTarget.value)
+  const BidPriceChangeHandler = (event) => {
+    setBidPrice(event.currentTarget.value)
+  }
+  const CategoryChangeHandler = (event) => {
+    setCategory(event.currentTarget.value)
   }
 
   const updateImages = (newImages) => {
@@ -49,7 +52,7 @@ function UploadProductPage(props) {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    if(!Title || !Description || !Price || !Region || !Images) {
+    if(!Title || !Description || !DirectPrice || !BidPrice || !Category || !Images) {
       return alert('모든 값을 넣어야 합니다.')
     }
 
@@ -58,9 +61,10 @@ function UploadProductPage(props) {
       writer: props.user.userData._id, // 로그인 된 사람의 ID
       title: Title,
       description: Description,
-      price: Price,
+      directPrice: DirectPrice,
+      bidPrice: BidPrice,
       images: Images,
-      region: Region
+      categoty: Category
     }
     
     Axios.post('/api/product', body)
@@ -91,15 +95,19 @@ function UploadProductPage(props) {
         <Input onChange={titleChangeHandler} value={Title}/>
         <br />
         <br />
-        <select onChange={regionChangeHandler} value={Region}>
-          {Regoin.map(item => (
+        <select onChange={CategoryChangeHandler} value={Category}>
+          {Categorys.map(item => (
             <option key={item.key} value={item.key}>{item.value}</option>
           ))}
         </select>
         <br />
         <br />
-        <label>가격(원)</label>
-        <Input type="number" onChange={priceChangeHandler} value={Price}/>
+        <label>즉시 입찰가</label>
+        <Input type="number" onChange={DirectPriceChangeHandler} value={DirectPrice}/>
+        <br />
+        <br />
+        <label>입찰 시작가</label>
+        <Input type="number" onChange={BidPriceChangeHandler} value={BidPrice}/>
         <br />
         <br />
         <label>설명</label>
