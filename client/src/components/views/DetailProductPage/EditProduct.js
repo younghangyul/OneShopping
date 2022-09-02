@@ -5,12 +5,19 @@ import Axios from 'axios'
 
 const { TextArea } = Input;
 
-const regions = [
-  {key:1, value: "신촌"},
-  {key:2, value: "모시래"},
-  {key:3, value: "단월"},
-  {key:4, value: "기숙사: 모시래"},
-  {key:5, value: "기숙사: 해오름"}
+const Categorys = [
+  {key:1, value: "남성의류"},
+  {key:2, value: "여성의류"},
+  {key:3, value: "도서"},
+  {key:4, value: "디지털/가전"},
+  {key:5, value: "스포츠/레저"},
+  {key:6, value: "생활용품"},
+  {key:7, value: "식료품"},
+  {key:8, value: "뷰티/미용"},
+  {key:9, value: "문구류"},
+  {key:10, value: "액세서리"},
+  {key:11, value: "티켓"},
+  {key:12, value: "기타"}
 ]
 
 function EditProduct(props) {
@@ -23,8 +30,9 @@ function EditProduct(props) {
         if(response.data.success) {
           setTitle(response.data.product[0].title)
           setDescription(response.data.product[0].description)
-          setPrice(response.data.product[0].price)
-          setregion(response.data.product[0].region)
+          setDirectPrice(response.data.product[0].directPrice)
+          setBidPrice(response.data.product[0].bidPrice)
+          setCategory(response.data.product[0].categoty)
         } else {
           alert('상세정보 가져오기 실패')
         }
@@ -33,8 +41,9 @@ function EditProduct(props) {
   
   const [Title, setTitle] = useState("")
   const [Description, setDescription] = useState("")
-  const [Price, setPrice] = useState(0)
-  const [Region, setregion] = useState(1)
+  const [DirectPrice, setDirectPrice] = useState(0)
+  const [BidPrice, setBidPrice] = useState(0)
+  const [Category, setCategory] = useState(1)
   const [Images, setImages] = useState([])
 
   const titleChangeHandler = (event) => {
@@ -43,11 +52,14 @@ function EditProduct(props) {
   const descriptionChangeHandler = (event) => {
     setDescription(event.currentTarget.value)
   }
-  const priceChangeHandler = (event   ) => {
-    setPrice(event.currentTarget.value)
+  const directPriceChangeHandler = (event) => {
+    setDirectPrice(event.currentTarget.value)
   }
-  const regionChangeHandler = (event) => {
-    setregion(event.currentTarget.value)
+  const bidPriceChangeHandler = (event) => {
+    setBidPrice(event.currentTarget.value)
+  }
+  const categoryChangeHandler = (event) => {
+    setCategory(event.currentTarget.value)
   }
 
   const updateImages = (newImages) => {
@@ -62,9 +74,10 @@ function EditProduct(props) {
       writer: props.user.userData._id, // 로그인 된 사람의 ID
       title: Title,
       description: Description,
-      price: Price,
+      directPrice: DirectPrice,
+      bidPrice: BidPrice,
       images: Images,
-      region: Region
+      category: Category
     }
     
     Axios.patch(`/api/product/edit/${productId}`, body)
@@ -96,19 +109,23 @@ function EditProduct(props) {
         <Input onChange={titleChangeHandler} value={Title}/>
         <br />
         <br />
+        <select onChange={categoryChangeHandler} value={Category}>
+          {Categorys.map(item => (
+            <option key={item.key} value={item.key}>{item.value}</option>
+          ))}
+        </select>
+        <br />
+        <br />
         <label>설명</label>
         <TextArea onChange={descriptionChangeHandler} value={Description} />
         <br />
         <br />
-        <label>가격(원)</label>
-        <Input type="number" onChange={priceChangeHandler} value={Price} />
+        <label>즉시 입찰가</label>
+        <Input type="number" onChange={directPriceChangeHandler} value={DirectPrice} />
         <br />
         <br />
-        <select onChange={regionChangeHandler} value={Region}>
-          {regions.map(item => (
-            <option key={item.key} value={item.key}>{item.value}</option>
-          ))}
-        </select>
+        <label>입찰 시작가</label>
+        <Input type="number" onChange={bidPriceChangeHandler} value={BidPrice} />
         <br />
         <br />
         <Button htmlType='submit'>

@@ -13,9 +13,13 @@ const productSchema = mongoose.Schema({
     description: {
       type: String
     },
-    price: {
+    directPrice: {
       type: Number,
       default: 0
+    },
+    bidPrice: {
+      type: Array,
+      default: []
     },
     images: {
       type: Array,
@@ -26,7 +30,7 @@ const productSchema = mongoose.Schema({
       maxlength: 100,
       default: 0
     },
-    region: {
+    categoty: {
       type: Number,
       default: 1
     },
