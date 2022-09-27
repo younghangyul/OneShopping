@@ -5,7 +5,7 @@ import { Button, Input } from 'antd';
 function Modal(props) {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
   const { open, close, header } = props;
-  const existingBidPrice = props.bidPrice;
+  const existingBidPrice = props.existingBidPrice;
 
   const [BidPrice, setBidPrice] = useState()
 

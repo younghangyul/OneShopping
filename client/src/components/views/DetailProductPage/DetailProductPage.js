@@ -69,17 +69,17 @@ function DetailProductPage(props) {
     event.preventDefault();
   }
 
-  const setbidding = (newPrice) => {
-    setBidPrice(newPrice)
-
+  const setBidding = (newPrice) => {
+    
     const body = {
       productId: productId,
-      bidPrice: BidPrice
+      bidPrice: newPrice
     }
     axios.patch('/api/product/bidding', body)
        .then(response => {
          if(response.data.success) {
            alert('입찰 되었습니다 :)')
+           window.location.reload()
          } else {
            alert('입찰에 실패했습니다 :(')
          }
@@ -98,9 +98,9 @@ function DetailProductPage(props) {
     modalButton = <Modal 
                     open={ModalOpen}
                     close={closeModal}
-                    header="Bidding Price"
+                    header="Bidding!"
                     existingBidPrice = {Product.bidPrice}
-                    Function = {setbidding}
+                    Function = {setBidding}
                   >
                   </Modal> 
   }
@@ -121,8 +121,7 @@ function DetailProductPage(props) {
         {removeButton}
         {directButton}
         &nbsp;&nbsp;
-        {biddingButton}
-        {modalButton}
+        {biddingButton}{modalButton}
       </div>
       <br /><br />
 
