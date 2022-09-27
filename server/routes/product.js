@@ -93,6 +93,21 @@ router.patch('/sold', (req, res) => {
   })
 })
 
+router.patch('/bidding', (req, res) => {
+  const productId = req.body.productId
+  const bidPrice = req.body.bidPrice
+  
+  Product.findOne({_id: productId}).exec((err, product) => {
+    if(err) return res.status(400).json({success: false, err})
+
+    product.bidPrice = bidPrice
+    product.save((err, product) => {
+      if(err) return res.status(400).json({success: false})
+      return res.status(200).json({ success: true, product })
+    })
+  })
+})
+
 router.post('/sellingProduct', (req, res) => {
   const userId = req.body.userId
   

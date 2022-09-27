@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ProductImage from './Sectoins/ProductImage';
 import ProductInfo from './Sectoins/ProductInfo';
-import { Row, Col, Button } from 'antd';
+import { Row, Col, Button, Input } from 'antd';
+import Modal from '../../Modal/Modal';
 
 function DetailProductPage(props) {
   
@@ -10,6 +11,15 @@ function DetailProductPage(props) {
 
   const [Product, setProduct] = useState({})
   const [Writer, setWriter] = useState({})
+  const [ModalOpen, setModalOpen] = useState(false)
+  const [BidPrice, setBidPrice] = useState()
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   useEffect(() => {
     axios.get(`/api/product/product_by_id?id=${ productId }&type=single`)
@@ -53,9 +63,48 @@ function DetailProductPage(props) {
           alert('판매완료 처리 실패했습니다 :(')
         }
       })
-      
   }
 
+  const directBuy = (event) => {
+    event.preventDefault();
+  }
+
+  const setbidding = (newPrice) => {
+    setBidPrice(newPrice)
+
+    const body = {
+      productId: productId,
+      bidPrice: BidPrice
+    }
+    axios.patch('/api/product/bidding', body)
+       .then(response => {
+         if(response.data.success) {
+           alert('입찰 되었습니다 :)')
+         } else {
+           alert('입찰에 실패했습니다 :(')
+         }
+        })
+  }
+
+  let editButton, soldButton, removeButton, directButton, biddingButton, modalButton = null
+
+  if( Writer._id === localStorage.userId ) {
+    editButton = <Button size='large' shape='round'> Edit </Button>
+    soldButton = <Button size='large' shape='round' onClick = {soldProduct}> Sold </Button>
+    removeButton = <Button size='large' shape='round'type = 'danger' onClick = {deleteProduct}> Remove </Button>
+  } else {
+    directButton = <Button size='large' shape='round' onClick = {directBuy}> DirectBuy </Button>
+    biddingButton = <Button size='large' shape='round' onClick = {openModal}> Bidding </Button>
+    modalButton = <Modal 
+                    open={ModalOpen}
+                    close={closeModal}
+                    header="Bidding Price"
+                    existingBidPrice = {Product.bidPrice}
+                    Function = {setbidding}
+                  >
+                  </Modal> 
+  }
+  
   return (
     <div style = {{ width: '100%', padding: '3rem 4rem' }}>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -64,18 +113,16 @@ function DetailProductPage(props) {
 
       <div style={{ display: 'flex', justifyContent: 'end'}}>
         <a href={`/product/edit/${Product._id}`}>
-          <Button size='large' shape='round' >
-            Edit
-          </Button>
+        {editButton}
         </a>
         &nbsp;&nbsp;
-        <Button size='large' shape='round' onClick={soldProduct}>
-            Sold
-        </Button>
+        {soldButton}
         &nbsp;&nbsp;
-        <Button size='large' shape='round' type='danger' onClick={deleteProduct}>
-            Remove
-        </Button>
+        {removeButton}
+        {directButton}
+        &nbsp;&nbsp;
+        {biddingButton}
+        {modalButton}
       </div>
       <br /><br />
 

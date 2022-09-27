@@ -4,6 +4,7 @@ import FileUpload from '../../utils/FileUpload';
 import Axios from 'axios'
 
 const { TextArea } = Input;
+
 const Categorys = [
   {key:1, value: "남성의류"},
   {key:2, value: "여성의류"},
