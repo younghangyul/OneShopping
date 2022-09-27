@@ -18,8 +18,8 @@ const productSchema = mongoose.Schema({
       default: 0
     },
     bidPrice: {
-      type: Array,
-      default: []
+      type: Number,
+      default: 0
     },
     images: {
       type: Array,
