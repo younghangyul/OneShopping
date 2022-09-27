@@ -62,6 +62,7 @@ router.patch('/edit/:productId', (req, res) => {
     product.price= Body.price
     product.region= Body.region
     product.image= Body.image
+    product.bidPrice = Body.bidPrice
     
     product.save((err, next) => {
       if(err) return res.status(400).json({success: false})
