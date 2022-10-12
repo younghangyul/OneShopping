@@ -60,7 +60,7 @@ router.patch('/edit/:productId', (req, res) => {
     product.title= Body.title
     product.description= Body.description
     product.price= Body.price
-    product.region= Body.region
+    product.category= Body.category
     product.image= Body.image
     product.bidPrice = Body.bidPrice
     

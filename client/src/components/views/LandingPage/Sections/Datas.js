@@ -1,4 +1,4 @@
-const region = [
+const category = [
   {
     "_id": 1,
     "name": "남성의류"
@@ -101,7 +101,7 @@ const price = [
 ]
 
 export {
-  region,
+  category,
   price,
   sold
 }

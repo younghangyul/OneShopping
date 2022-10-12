@@ -7,7 +7,7 @@ import CheckBox from '../LandingPage/Sections/CheckBox';
 import RadioBox from '../LandingPage/Sections/RadioBox';
 import Sold from './Sections/Sold';
 import SearchFeature from './Sections/SearchFeature';
-import { region, price, sold } from './Sections/Datas'
+import { category, price, sold } from './Sections/Datas'
 import { Link } from 'react-router-dom';
 
 function LandingPage() {
@@ -17,7 +17,7 @@ function LandingPage() {
   const [Limit, setLimit] = useState(20)
   const [PostSize, setPostSize] = useState(0)
   const [Filters, setFilters] = useState({
-    region: [],
+    category: [],
     price: [],
     sold: []
   })
@@ -163,7 +163,7 @@ function LandingPage() {
       <Row gutter={[16, 16]}>
         <Col lg={12} xs={24}>
           {/* CheckBox */}
-          <CheckBox list={region} handleFilters={filters => handleFilters(filters, 'region')} />
+          <CheckBox list={category} handleFilters={filters => handleFilters(filters, 'category')} />
         </Col>
         <Col lg={12} xs={24}>
           {/* RadioBox */}

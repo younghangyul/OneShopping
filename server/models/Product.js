@@ -30,7 +30,7 @@ const productSchema = mongoose.Schema({
       maxlength: 100,
       default: 0
     },
-    categoty: {
+    category: {
       type: Number,
       default: 1
     },

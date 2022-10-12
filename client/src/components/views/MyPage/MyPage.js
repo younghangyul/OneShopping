@@ -14,30 +14,33 @@ function MyPage(props) {
   const [Skip, setSkip] = useState(0)
   const [Limit, setLimit] = useState(4)
   const [PostSize, setPostSize] = useState(0)
+
   
   const fileInput = useRef(null)
 
+  // props.match.params.userId = 작성자 id
+  const id = (localStorage.userId === props.match.params.userId) ? localStorage.userId : props.match.params.userId
+  
   useEffect(() => {
     axios.post('/api/users/user', {
-      userId: localStorage.userId
+      userId: id
     })
-      .then(response => {
-        if (response.data.success) {
-          setUserInfo(response.data.userInfo)
-          response.data.userInfo.images && response.data.userInfo.images.length > 0 ?
-          setImage(response.data.userInfo.images[0]) : setImage('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')
-          setName(response.data.userInfo.name)
-        } else {
-          alert("유저 정보 가져오기 실패")
-        }
-      })
+    .then(response => {
+      if (response.data.success) {
+        setUserInfo(response.data.userInfo)
+        response.data.userInfo.images && response.data.userInfo.images.length > 0 ?
+        setImage(response.data.userInfo.images[0]) : setImage('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')
+        setName(response.data.userInfo.name)
+      } else {
+        alert("유저 정보 가져오기 실패")
+      }
+    })
   }, [])
   
   useEffect(() => {
-    let body = {
-      userId: localStorage.userId
-    }
-    axios.post('/api/product/sellingProduct', body)
+    axios.post('/api/product/sellingProduct', {
+      userId: id
+    })
     .then(response => {
       if (response.data.success) {
         setProducts(response.data.productInfo)
@@ -69,9 +72,9 @@ function MyPage(props) {
       name: Name
     }
     axios.patch('/api/users/profile', body)
-      .then(response => {
-        if(response.data.success) {
-          alert('내 정보가 수정됐습니다 :)')
+    .then(response => {
+      if(response.data.success) {
+        alert('내 정보가 수정됐습니다 :)')
           window.location.replace('/users/myPage')
         } else {
           alert('내 정보 수정에 실패했습니다 :(')
@@ -110,7 +113,7 @@ function MyPage(props) {
   }
   if(update) {
     updateButton = <Button onClick={onClickUpdate}>수정</Button>
-    deleteButton = <Button onClick={onClickDelete}>삭제</Button>
+    deleteButton = <Button onClick={onClickDelete}>프로필 삭제</Button>
     nickName = UserInfo.name
     
   } else {
@@ -119,14 +122,27 @@ function MyPage(props) {
     editName = <Input onChange={nameChangeHandler} value={Name}/>
   }
 
+  let test, test2 = null;
+
   const renderCards = Products.map((product, index) => {
+
+    if(product.sold === 1) test = '판매완료'; 
+    else test = `즉시 입찰가  ${product.directPrice}원`
+    if(product.sold === 1) test2 = '😄';
+    else test2 = `현재 입찰가  ${product.bidPrice}원`
+
     return <Col lg={6} md={8} xs={24} key={index}>
       <Card
         cover={<Link to={`/product/${ product._id }` }><ImageSlider images={ product.images } /></Link> }
       >
         <Meta 
           title={product.title}
-          description={`${product.price}원`}
+          description={[
+            <div key={index}>
+              <p>{test}</p>
+              <p>{test2}</p>
+            </div>
+          ]}
         />
       </Card>
     </Col>
@@ -135,7 +151,7 @@ function MyPage(props) {
 
   
   return (
-    <div style = {{ maxWidth: '700px', margin: '2rem auto' }}>
+    <div style = {{ maxWidth: '1000px', margin: '2rem auto' }}>
       <div style = {{ textAlign: 'center', marginBottom: '2rem' }}>
         <h2>내 정보</h2>
         <Avatar

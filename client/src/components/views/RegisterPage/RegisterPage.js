@@ -1,10 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import moment from "moment";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { registerUser } from "../../../_actions/user_actions";
 import { useDispatch } from "react-redux";
-import ImageUpload from "../../utils/ImageUpload";
 
 import {
   Form,

@@ -32,7 +32,7 @@ function EditProduct(props) {
           setDescription(response.data.product[0].description)
           setDirectPrice(response.data.product[0].directPrice)
           setBidPrice(response.data.product[0].bidPrice)
-          setCategory(response.data.product[0].categoty)
+          setCategory(response.data.product[0].category)
         } else {
           alert('상세정보 가져오기 실패')
         }

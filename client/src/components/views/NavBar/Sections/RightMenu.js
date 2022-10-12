@@ -10,7 +10,8 @@ import { useSelector } from "react-redux";
 function RightMenu(props) {
   
   const user = useSelector(state => state.user)
-  
+  const userId = localStorage.userId
+
   const logoutHandler = () => {
     axios.get(`${USER_SERVER}/logout`).then(response => {
       if (response.status === 200) {
@@ -42,7 +43,7 @@ function RightMenu(props) {
           <a href='/product/upload'>판매하기</a>
         </Menu.Item>
         <Menu.Item key="mypage">
-          <a href={'/users/myPage'}>내정보</a>
+          <a href={`/users/${userId}`}>내 정보</a>
         </Menu.Item>
         <Menu.Item key="logout">
           <a onClick={logoutHandler}>로그아웃</a>

@@ -49,7 +49,7 @@ function UploadProductPage(props) {
   const updateImages = (newImages) => {
     setImages(newImages)
   }
-
+  
   const submitHandler = (event) => {
     event.preventDefault();
 
@@ -59,13 +59,13 @@ function UploadProductPage(props) {
 
     // 서버에 채운 값을 request로 보낸다.
     const body = {
-      writer: props.user.userData._id, // 로그인 된 사람의 ID
+      writer: localStorage.userId, // 로그인 된 사람의 ID
       title: Title,
       description: Description,
       directPrice: DirectPrice,
       bidPrice: BidPrice,
       images: Images,
-      categoty: Category
+      category: Category
     }
     
     Axios.post('/api/product', body)
