@@ -10,7 +10,12 @@ function Modal(props) {
   const [BidPrice, setBidPrice] = useState()
 
   const sendPriceHandler = () => {
-    props.Function(BidPrice)
+    if(existingBidPrice < BidPrice) {
+      props.Function(BidPrice)
+    } else {
+      alert('임찰 금액이 현재 입찰 가격보다 작습니다 :(')
+      window.location.reload();
+    }
   }
   
   const BidPriceChangeHandler = (event) => {

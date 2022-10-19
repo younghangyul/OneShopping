@@ -29,7 +29,7 @@ function App() {
           <Route exact path="/join" component={Auth(Join, true)} />
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
-          <Route exact path="/users/myPage" component={Auth(MyPage, true)} />
+          <Route exact path="/users/:userId" component={Auth(MyPage, null)} />
           <Route exact path="/product/upload" component={Auth(UploadProductPage, true)} />
           <Route exact path="/product/:productId" component={Auth(DetailProductPage, null)} />
           <Route exact path="/product/edit/:productId" component={Auth(EditProduct, true)} />
