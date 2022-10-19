@@ -11,8 +11,7 @@ import Footer from "./views/Footer/Footer"
 import UploadProductPage from './views/UploadProductPage/UploadProductPage';
 import DetailProductPage from './views/DetailProductPage/DetailProductPage';
 import EditProduct from './views/DetailProductPage/EditProduct';
-import Chat from './views/ChattingPage/Chat/Chat';
-import Join from './views/ChattingPage/Join/Join';
+import ChatPage from './views/ChatPage/ChatPage';
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -25,8 +24,7 @@ function App() {
       <div style={{ paddingTop: '69px', minHeight: 'calc(100vh - 80px)' }}>
         <Switch>
           <Route exact path="/" component={Auth(LandingPage, null)} />
-          <Route exact path="/chat" component={Auth(Chat, true)} />
-          <Route exact path="/join" component={Auth(Join, true)} />
+          <Route exact path="/chat" component={Auth(ChatPage, true)} />
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/users/:userId" component={Auth(MyPage, null)} />
