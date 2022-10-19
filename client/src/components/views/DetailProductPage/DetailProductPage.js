@@ -86,13 +86,18 @@ function DetailProductPage(props) {
         })
   }
 
-  let editButton, soldButton, removeButton, directButton, biddingButton, modalButton = null
+  const chatting = () => {
+    props.history.push('/chat');
+  }
+
+  let chatButton, editButton, soldButton, removeButton, directButton, biddingButton, modalButton = null
 
   if( Writer._id === localStorage.userId ) {
     editButton = <Button size='large' shape='round'> Edit </Button>
     soldButton = <Button size='large' shape='round' onClick = {soldProduct}> Sold </Button>
     removeButton = <Button size='large' shape='round'type = 'danger' onClick = {deleteProduct}> Remove </Button>
   } else {
+    chatButton = <Button size='large' shape='round' onClick = {chatting}> Chat </Button>
     directButton = <Button size='large' shape='round' onClick = {directBuy}> DirectBuy </Button>
     biddingButton = <Button size='large' shape='round' onClick = {openModal}> Bidding </Button>
     modalButton = <Modal 
@@ -119,6 +124,8 @@ function DetailProductPage(props) {
         {soldButton}
         &nbsp;&nbsp;
         {removeButton}
+        {chatButton}
+        &nbsp;&nbsp;
         {directButton}
         &nbsp;&nbsp;
         {biddingButton}{modalButton}

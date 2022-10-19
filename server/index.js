@@ -3,14 +3,17 @@ const app = express();
 const path = require("path");
 const cors = require('cors')
 
-const http = require('http')
-const socketio = require('socket.io')
-const router = require('../server/routes/chat')
-
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const methodOverride = require('method-override');
+app.use(cors())
 
+const server = require('http').createServer(app);
+const io = require('socket.io')(server, {
+  cors: {
+    origin: "*"
+  }
+});
 const config = require("./config/key");
 
 // const mongoose = require("mongoose");
@@ -18,6 +21,9 @@ const config = require("./config/key");
 //   .connect(config.mongoURI, { useNewUrlParser: true })
 //   .then(() => console.log("DB connected"))
 //   .catch(err => console.error(err));
+
+const { Chat } = require('./models/Chat');
+const { auth } = require("./middleware/auth");
 
 const mongoose = require("mongoose");
 const connect = mongoose.connect(config.mongoURI,
@@ -28,10 +34,9 @@ const connect = mongoose.connect(config.mongoURI,
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
 
-app.use(cors())
-
 //to not get any deprecation warning or error
 //support parsing of application/x-www-form-urlencoded post data
+
 app.use(bodyParser.urlencoded({ extended: true }));
 //to get json data
 // support parsing of application/json type post data
@@ -44,8 +49,60 @@ app.use(cookieParser());
 app.use(methodOverride());
 
 app.use('/api/users', require('./routes/users'));
+app.use('/api/chat', require('./routes/chat'));
 app.use('/api/product', require('./routes/product'));
 app.use('/uploads', express.static('uploads'));
+
+const multer = require('multer');
+const fs = require('fs');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}_${file.originalname}`)
+  },
+  // fileFilter: (req, file, cb) => {
+  //   const ext = path.extname(file.originalname)
+  //   if (ext !== '.jpg' && ext !== '.png' && ext !== '.mp4') {
+  //     return cb(res.status(400).end('only jpg, png, mp4 is allowed'), false);
+  //   }
+  //   cb(null, true);
+  // }
+})
+
+const upload = multer({ storage: storage }).single('file');
+
+app.post("/api/chat/uploadfiles", auth, (req, res) => {
+  upload(req, res, err => {
+    if(err) { return res.json({ success: false, err }) }
+    return res.json({ success: true, url: res.req.file.path });
+  });
+});
+
+io.on('connection', socket => {
+  socket.on('Input Chat Message', msg => {
+    connect.then(db => {
+      try {
+          let chat = new Chat({ message: msg.chatMessage, sender: msg.userId, type: msg.type })
+          
+          chat.save((err, doc) => {
+            if(err) return res.json({ success: false, err})
+
+            Chat.find({ "_id": doc._id })
+            .populate('sender')
+            .exec((err, doc) => {
+
+                return io.emit('Output Chat Message', doc);
+            })
+          })
+      } catch (error) {
+        console.error(error);
+      }
+    })
+  })
+})
 
 if (process.env.NODE_ENV === "production") {
 
@@ -58,63 +115,8 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const port = process.env.PORT || 5000
-app.listen(port, () => {
+
+server.listen(port, () => {
   console.log(`Server Listening on ${port}`)
 });
 
-const server = http.createServer(app);
-const io = socketio(server);
-app.use(router);
-const { addUser, removeUser, getUser, getUsersInRoom } = require('./chatUsers.js');
-
-io.on('connection', (socket) => {
-  console.log('새로운 connection이 발생하였습니다.')
-  socket.on('join', ({ name, room }, callback) => {
-    console.log(name, room);
-    const { error, user } = addUser({ id: socket.id, name, room })
-    if (error) return callback(error);
-
-    socket.emit('message', {
-      user: 'admin',
-      text: `${user.name}, ${user.room}에 오신것을 환영합니다.`,
-    })
-    socket.broadcast.to(user.room).emit('message', {
-      user: 'admin',
-      text: `${user.name} 님이 가입하셨습니다.`,
-    })
-    io.to(user.room).emit('roomData', {
-      room: user.room,
-      users: getUsersInRoom(user.room),
-    })
-    socket.join(user.room)
-
-
-    callback();
-  })
-  socket.on('sendMessage', (message, callback) => {
-    const user = getUser(socket.id)
-    io.to(user.room).emit('message', { user: user.name, text: message })
-    callback();
-  })
-  socket.on('disconnect', () => {
-    const user = removeUser(socket.id)
-
-    if (user) {
-      io.to(user.room).emit('message', {
-        user: 'Admin',
-        text: `${user.name} 님이 방을 나갔습니다.`,
-      })
-      io.to(user.room).emit('roomData', {
-        room: user.room,
-        users: getUsersInRoom(user.room),
-      })
-    }
-    console.log('유저가 떠났어요.')
-  })
-})
-// 채팅 부분
-// const Port = process.env.PORT || 4000
-
-
-
-// server.listen(Port, () => console.log(`서버가 ${Port} 에서 시작되었어요`))
