@@ -15,7 +15,7 @@ function ProductInfo(props) {
         <Descriptions.Item label="판매자"><a href={`/users/${props.writer._id}`}>{props.writer.name}</a></Descriptions.Item>
         <Descriptions.Item label="Price">{props.detail.directPrice}</Descriptions.Item>
         <Descriptions.Item label="Description">{props.detail.description}</Descriptions.Item>
-        <Descriptions.Item label="BiddingPrice">{bidPrice}</Descriptions.Item>
+        <Descriptions.Item label="BidPrice">{bidPrice}</Descriptions.Item>
       </Descriptions>
     </div>
   )
