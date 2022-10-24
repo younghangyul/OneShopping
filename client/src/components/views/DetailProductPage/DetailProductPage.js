@@ -67,10 +67,17 @@ function DetailProductPage(props) {
 
   const directBuy = (event) => {
     event.preventDefault();
+
+    const confirmDirectBuy = window.confirm(`즉시입찰가는 ${Product.directPrice}원 입니다.\n채팅창으로 이동하시겠습니까?`)
+    if(confirmDirectBuy) {
+      props.history.push('/chat');
+    } else {    
+    }
   }
 
   const setBidding = (newPrice) => {
     
+    if(Product.directPrice > newPrice) {
     const body = {
       productId: productId,
       bidPrice: newPrice
@@ -84,6 +91,9 @@ function DetailProductPage(props) {
            alert('입찰에 실패했습니다 :(')
          }
         })
+    } else {
+      alert(`즉시입찰가인 ${Product.directPrice}원보다 낮아야 합니다.`)
+    }
   }
 
   const chatting = () => {
