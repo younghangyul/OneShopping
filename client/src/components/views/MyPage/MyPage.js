@@ -75,7 +75,7 @@ function MyPage(props) {
     .then(response => {
       if(response.data.success) {
         alert('내 정보가 수정됐습니다 :)')
-          window.location.replace('/users/myPage')
+          window.location.reload();
         } else {
           alert('내 정보 수정에 실패했습니다 :(')
         }
@@ -93,7 +93,7 @@ function MyPage(props) {
       .then(response => {
         if(response.data.success) {
           alert('기본 프로필 이미지로 변경되었습니다 :)')
-          window.location.replace('/users/myPage');
+          window.location.reload();
         } else {
           alert('프로필 이미지 삭제에 실패했습니다 :(')
         }
@@ -113,17 +113,17 @@ function MyPage(props) {
   }
   if(update) {
     updateButton = <Button onClick={onClickUpdate}>수정</Button>
-    deleteButton = <Button onClick={onClickDelete}>프로필 삭제</Button>
+    deleteButton = <Button onClick={onClickDelete}>삭제</Button>
     nickName = UserInfo.name
     
   } else {
     updateButton = <Button onClick={submitHandler}>저장</Button>
     cancleButton = <Button onClick={onClickCancle}>취소</Button>
-    editName = <Input onChange={nameChangeHandler} value={Name}/>
+    editName = <Input style = {{ maxWidth: '400px'}} onChange={nameChangeHandler} value={Name}/>
   }
 
   let test, test2 = null;
-
+  
   const renderCards = Products.map((product, index) => {
 
     if(product.sold === 1) test = '판매완료'; 
@@ -168,12 +168,15 @@ function MyPage(props) {
           onChange={onChange}
           ref={fileInput}
         />
+        <div style = {{ textAlign: 'center', marginBottom: '2rem' }}>
+        {nickName}
+        {editName}
+        </div>
+        <div>
         {updateButton}
         {deleteButton}
         {cancleButton}
-        {editName}
-        <br />
-        {nickName}
+        </div>
 
         <br /><br /><br />
         <h2>판매중인 상품</h2>
