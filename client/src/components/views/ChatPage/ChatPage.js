@@ -24,7 +24,6 @@ export class ChatPage extends Component {
         this.socket.on('Output Chat Message', messageFromBackEnd => {
             this.props.dispatch(afterPostMessage(messageFromBackEnd));
         })
-
     }
 
     componentDidUpdate() {
@@ -99,7 +98,7 @@ export class ChatPage extends Component {
         return (
             <React.Fragment>
                 <div>
-                    <p style={{ fontSize: '2rem', textAlign: 'center' }}>Real Time Chat</p>
+                    <p style={{ fontSize: '2rem', textAlign: 'center' }}>채팅</p>
                 </div>
 
                 <div style={{ maxWidth: '800px', margin: '0 auto' }}>
@@ -121,7 +120,7 @@ export class ChatPage extends Component {
                                 <Input
                                     id="message"
                                     prefix={<Icon type="message" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    placeholder="Let's start talking"
+                                    placeholder="메세지를 입력해주세요."
                                     type='text'
                                     value={this.state.chatMessage}
                                     onChange={this.handleSearchChange}
