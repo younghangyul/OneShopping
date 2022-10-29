@@ -68,7 +68,7 @@ function DetailProductPage(props) {
   const directBuy = (event) => {
     event.preventDefault();
 
-    const confirmDirectBuy = window.confirm(`즉시입찰가는 ${Product.price}원 입니다.\n채팅창으로 이동하시겠습니까?`)
+    const confirmDirectBuy = window.confirm(`즉시구매가는 ${Product.price}원 입니다.\n채팅창으로 이동하시겠습니까?`)
     if(confirmDirectBuy) {
       props.history.push('/chat');
     } else {    
@@ -92,7 +92,7 @@ function DetailProductPage(props) {
          }
         })
     } else {
-      alert(`즉시입찰가인 ${Product.price}원보다 낮아야 합니다.`)
+      alert(`즉시구매가인 ${Product.price}원보다 낮아야 합니다.`)
     }
   }
 

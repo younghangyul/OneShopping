@@ -102,7 +102,7 @@ function UploadProductPage(props) {
         </select>
         <br />
         <br />
-        <label>즉시 입찰가</label>
+        <label>즉시 구매가</label>
         <Input type="number" onChange={priceChangeHandler} value={Price}/>
         <br />
         <br />

@@ -20,7 +20,8 @@ function MyPage(props) {
 
   // props.match.params.userId = 작성자 id
   const id = (localStorage.userId === props.match.params.userId) ? localStorage.userId : props.match.params.userId
-  
+  console.log('props.match.params.userId', props.match.params.userId);
+  console.log('localStorage.userId', localStorage.userId);
   useEffect(() => {
     axios.post('/api/users/user', {
       userId: id
@@ -116,9 +117,9 @@ function MyPage(props) {
   
   if(UserInfo.userId === localStorage._id) {
     if(update) {
-      chatButton = <Button onClick={onClickChat}>채팅</Button>
-      updateButton = <Button onClick={onClickUpdate}>수정</Button>
-      deleteButton = <Button onClick={onClickDelete}>삭제</Button>
+      chatButton = <Button onClick={onClickChat}>쪽지</Button>
+      updateButton = <Button onClick={onClickUpdate}>닉네임 수정</Button>
+      deleteButton = <Button onClick={onClickDelete}>프로필 삭제</Button>
       nickName = UserInfo.name
       
     } else {
@@ -126,15 +127,13 @@ function MyPage(props) {
       cancleButton = <Button onClick={onClickCancle}>취소</Button>
       editName = <Input style = {{ maxWidth: '400px'}} onChange={nameChangeHandler} value={Name}/>
     }
-  }
-  
 
   let test, test2 = null;
   
   const renderCards = Products.map((product, index) => {
 
     if(product.sold === 1) test = '판매완료'; 
-    else test = `즉시 입찰가  ${product.price}원`
+    else test = `즉시 구매가  ${product.price}원`
     if(product.sold === 1) test2 = '😄';
     else test2 = `현재 입찰가  ${product.bidPrice}원`
 
@@ -155,51 +154,91 @@ function MyPage(props) {
     </Col>
   })
 
+    if(id === localStorage.userId) {
+      return (
+        <div style = {{ maxWidth: '1000px', margin: '2rem auto' }}>
+          <div style = {{ textAlign: 'center', marginBottom: '2rem' }}>
+            <h2>내 정보</h2>
+            <Avatar
+              src={Image}
+              style={{margin:'20px'}}
+              size={200}
+              onClick={()=>{fileInput.current.click()}}
+            />
+            <input
+              type='file'
+              style={{display:'none'}}
+              accept='image/jpg,image/png,image/jpeg'
+              name='profile_img'
+              onChange={onChange}
+              ref={fileInput}
+            />
+            <div style = {{ textAlign: 'center', marginBottom: '1rem' }}>
+              {deleteButton}
+            </div>
+            <div style={{ marginBottom: '5px' }}>
+              {nickName}
+              {editName}
+            </div>
+            <div style={{ marginBottom: '2rem' }}>
+              {updateButton}
+              {cancleButton}
+            </div>
+            <div>
+              {chatButton}
+            </div>
 
-  
-  return (
-    <div style = {{ maxWidth: '1000px', margin: '2rem auto' }}>
-      <div style = {{ textAlign: 'center', marginBottom: '2rem' }}>
-        <h2>내 정보</h2>
-        <Avatar
-          src={Image}
-          style={{margin:'20px'}}
-          size={200}
-          onClick={()=>{fileInput.current.click()}}
-        />
-        <input
-          type='file'
-          style={{display:'none'}}
-          accept='image/jpg,image/png,image/jpeg'
-          name='profile_img'
-          onChange={onChange}
-          ref={fileInput}
-        />
-        <div style={{ marginBottom: '10px' }}>
-          {chatButton}
-        </div>
-        <div style = {{ textAlign: 'center', marginBottom: '2rem' }}>
-          {nickName}
-          {editName}
-        </div>
-        <div>
-          {updateButton}
-          {deleteButton}
-          {cancleButton}
-        </div>
-
-        <br /><br /><br />
-        <h2>판매중인 상품</h2>
-        <Row gutter={[16, 16]}>
-          {renderCards}
-        </Row>
-        {PostSize >= Limit &&
-          <div style={{display: 'flex', justifyContent: 'center'}}>
-            <Button >더보기</Button>
+            <br /><br /><br />
+            <h2>판매중인 상품</h2>
+            <Row gutter={[16, 16]}>
+              {renderCards}
+            </Row>
+            {PostSize >= Limit &&
+              <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Button >더보기</Button>
+              </div>
+            }
           </div>
-        }
-      </div>
-    </div>
-  )
+        </div>
+      )
+    } else {
+      return (
+        <div style = {{ maxWidth: '1000px', margin: '2rem auto' }}>
+            <div style = {{ textAlign: 'center', marginBottom: '2rem' }}>
+              <h2>유저 정보</h2>
+              <Avatar
+                src={Image}
+                style={{margin:'20px'}}
+                size={200}
+                onClick={()=>{fileInput.current.click()}}
+              />
+              <input
+                type='file'
+                style={{display:'none'}}
+                accept='image/jpg,image/png,image/jpeg'
+                name='profile_img'
+                onChange={onChange}
+                ref={fileInput}
+              />
+              <div style = {{ textAlign: 'center', marginBottom: '2rem' }}>
+                {nickName}
+              </div>
+
+              <br /><br /><br />
+              <h2>판매중인 상품</h2>
+              <Row gutter={[16, 16]}>
+                {renderCards}
+              </Row>
+              {PostSize >= Limit &&
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                  <Button >더보기</Button>
+                </div>
+              }
+            </div>
+          </div>
+      )
+    }
+  } 
 }
+
 export default MyPage
