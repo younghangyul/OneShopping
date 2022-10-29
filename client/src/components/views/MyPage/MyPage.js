@@ -113,6 +113,7 @@ function MyPage(props) {
   const nameChangeHandler = (event) => {
     setName(event.currentTarget.value)
   }
+  
   if(UserInfo.userId === localStorage._id) {
     if(update) {
       chatButton = <Button onClick={onClickChat}>채팅</Button>
