@@ -65,7 +65,7 @@ function LandingPage() {
   const renderCards = Products.map((product, index) => {
     
     if(product.sold === 1) test = '판매완료'; 
-    else test = `즉시 입찰가  ${product.directPrice}원`
+    else test = `즉시 입찰가  ${product.price}원`
     
     if(product.sold === 1) test2 = '😄';
     else test2 = `현재 입찰가  ${product.bidPrice}원`

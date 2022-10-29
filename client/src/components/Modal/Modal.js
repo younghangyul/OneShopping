@@ -39,9 +39,9 @@ function Modal(props) {
             {props.children}
           </main>
           <footer>
-            <Button className="send" onClick={sendPriceHandler}> Bid </Button>
+            <Button className="send" onClick={sendPriceHandler}> 입찰 </Button>
             &nbsp;
-            <Button className="close" onClick={close}> Close </Button>
+            <Button className="close" onClick={close}> 취소 </Button>
           </footer>
         </section>
        : null}

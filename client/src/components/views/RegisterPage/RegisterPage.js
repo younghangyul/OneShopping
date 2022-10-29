@@ -96,13 +96,13 @@ function RegisterPage(props) {
         } = props;
         return (
           <div className="app">
-            <h2>Sign up</h2>
+            <h2>회원가입</h2>
             <Form style={{ minWidth: '375px' }} {...formItemLayout} onSubmit={handleSubmit} >
               
-              <Form.Item required label="Name">
+              <Form.Item required label="닉네임">
                 <Input
                   id="name"
-                  placeholder="Enter your name"
+                  placeholder="Enter your nick-name"
                   type="text"
                   value={values.name}
                   onChange={handleChange}
@@ -116,10 +116,10 @@ function RegisterPage(props) {
                 )}
               </Form.Item>
 
-              <Form.Item required label="Email" hasFeedback validateStatus={errors.email && touched.email ? "error" : 'success'}>
+              <Form.Item required label="아이디" hasFeedback validateStatus={errors.email && touched.email ? "error" : 'success'}>
                 <Input
                   id="email"
-                  placeholder="Enter your Email"
+                  placeholder="Enter your ID"
                   type="email"
                   value={values.email}
                   onChange={handleChange}
@@ -133,7 +133,7 @@ function RegisterPage(props) {
                 )}
               </Form.Item>
 
-              <Form.Item required label="Password" hasFeedback validateStatus={errors.password && touched.password ? "error" : 'success'}>
+              <Form.Item required label="비밀번호" hasFeedback validateStatus={errors.password && touched.password ? "error" : 'success'}>
                 <Input
                   id="password"
                   placeholder="Enter your password"
@@ -150,7 +150,7 @@ function RegisterPage(props) {
                 )}
               </Form.Item>
 
-              <Form.Item required label="Confirm" hasFeedback>
+              <Form.Item required label="비밀번호 확인" hasFeedback>
                 <Input
                   id="confirmPassword"
                   placeholder="Enter your confirmPassword"
@@ -169,7 +169,7 @@ function RegisterPage(props) {
 
               <Form.Item {...tailFormItemLayout}>
                 <Button onClick={handleSubmit} type="primary" disabled={isSubmitting}>
-                  Submit
+                  가입
                 </Button>
               </Form.Item>
             </Form>

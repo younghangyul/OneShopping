@@ -111,23 +111,26 @@ function MyPage(props) {
   const nameChangeHandler = (event) => {
     setName(event.currentTarget.value)
   }
-  if(update) {
-    updateButton = <Button onClick={onClickUpdate}>수정</Button>
-    deleteButton = <Button onClick={onClickDelete}>삭제</Button>
-    nickName = UserInfo.name
-    
-  } else {
-    updateButton = <Button onClick={submitHandler}>저장</Button>
-    cancleButton = <Button onClick={onClickCancle}>취소</Button>
-    editName = <Input style = {{ maxWidth: '400px'}} onChange={nameChangeHandler} value={Name}/>
+  if(UserInfo.userId === localStorage._id) {
+    if(update) {
+      updateButton = <Button onClick={onClickUpdate}>수정</Button>
+      deleteButton = <Button onClick={onClickDelete}>삭제</Button>
+      nickName = UserInfo.name
+      
+    } else {
+      updateButton = <Button onClick={submitHandler}>저장</Button>
+      cancleButton = <Button onClick={onClickCancle}>취소</Button>
+      editName = <Input style = {{ maxWidth: '400px'}} onChange={nameChangeHandler} value={Name}/>
+    }
   }
+  
 
   let test, test2 = null;
   
   const renderCards = Products.map((product, index) => {
 
     if(product.sold === 1) test = '판매완료'; 
-    else test = `즉시 입찰가  ${product.directPrice}원`
+    else test = `즉시 입찰가  ${product.price}원`
     if(product.sold === 1) test2 = '😄';
     else test2 = `현재 입찰가  ${product.bidPrice}원`
 
@@ -169,13 +172,13 @@ function MyPage(props) {
           ref={fileInput}
         />
         <div style = {{ textAlign: 'center', marginBottom: '2rem' }}>
-        {nickName}
-        {editName}
+          {nickName}
+          {editName}
         </div>
         <div>
-        {updateButton}
-        {deleteButton}
-        {cancleButton}
+          {updateButton}
+          {deleteButton}
+          {cancleButton}
         </div>
 
         <br /><br /><br />

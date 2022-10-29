@@ -61,7 +61,7 @@ router.patch('/edit/:productId', (req, res) => {
     product.description= Body.description
     product.price= Body.price
     product.category= Body.category
-    product.image= Body.image
+    product.images= Body.images
     product.bidPrice = Body.bidPrice
     
     product.save((err, next) => {
@@ -141,11 +141,12 @@ router.post('/products', (req, res) => {
       else if(key === 'sold') {
         findArgs[key] = req.body.filters[key]
       }
-       else {
+      else {
         findArgs[key] = req.body.filters[key]
       }
     }
   }
+
     //검색을 했다면 검색한 결과를 도출, 아니면 기존 제품 출력
     if(term) {
       Product.find(findArgs)

@@ -30,7 +30,7 @@ function EditProduct(props) {
         if(response.data.success) {
           setTitle(response.data.product[0].title)
           setDescription(response.data.product[0].description)
-          setDirectPrice(response.data.product[0].directPrice)
+          setPrice(response.data.product[0].price)
           setBidPrice(response.data.product[0].bidPrice)
           setCategory(response.data.product[0].category)
         } else {
@@ -41,7 +41,7 @@ function EditProduct(props) {
   
   const [Title, setTitle] = useState("")
   const [Description, setDescription] = useState("")
-  const [DirectPrice, setDirectPrice] = useState(0)
+  const [Price, setPrice] = useState(0)
   const [BidPrice, setBidPrice] = useState(0)
   const [Category, setCategory] = useState(1)
   const [Images, setImages] = useState([])
@@ -52,8 +52,8 @@ function EditProduct(props) {
   const descriptionChangeHandler = (event) => {
     setDescription(event.currentTarget.value)
   }
-  const directPriceChangeHandler = (event) => {
-    setDirectPrice(event.currentTarget.value)
+  const priceChangeHandler = (event) => {
+    setPrice(event.currentTarget.value)
   }
   const bidPriceChangeHandler = (event) => {
     setBidPrice(event.currentTarget.value)
@@ -74,7 +74,7 @@ function EditProduct(props) {
       writer: props.user.userData._id, // 로그인 된 사람의 ID
       title: Title,
       description: Description,
-      directPrice: DirectPrice,
+      price: Price,
       bidPrice: BidPrice,
       images: Images,
       category: Category
@@ -116,20 +116,20 @@ function EditProduct(props) {
         </select>
         <br />
         <br />
-        <label>설명</label>
-        <TextArea onChange={descriptionChangeHandler} value={Description} />
-        <br />
-        <br />
         <label>즉시 입찰가</label>
-        <Input type="number" onChange={directPriceChangeHandler} value={DirectPrice} />
+        <Input type="number" onChange={priceChangeHandler} value={Price} />
         <br />
         <br />
         <label>입찰 시작가</label>
         <Input type="number" onChange={bidPriceChangeHandler} value={BidPrice} />
         <br />
         <br />
+        <label>설명</label>
+        <TextArea onChange={descriptionChangeHandler} value={Description} />
+        <br />
+        <br />
         <Button htmlType='submit'>
-          Edit
+          수정
         </Button>
       </Form>
     </div>

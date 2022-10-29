@@ -68,7 +68,7 @@ function DetailProductPage(props) {
   const directBuy = (event) => {
     event.preventDefault();
 
-    const confirmDirectBuy = window.confirm(`즉시입찰가는 ${Product.directPrice}원 입니다.\n채팅창으로 이동하시겠습니까?`)
+    const confirmDirectBuy = window.confirm(`즉시입찰가는 ${Product.price}원 입니다.\n채팅창으로 이동하시겠습니까?`)
     if(confirmDirectBuy) {
       props.history.push('/chat');
     } else {    
@@ -77,7 +77,7 @@ function DetailProductPage(props) {
 
   const setBidding = (newPrice) => {
     
-    if(Product.directPrice > newPrice) {
+    if(Product.price > newPrice) {
     const body = {
       productId: productId,
       bidPrice: newPrice
@@ -92,7 +92,7 @@ function DetailProductPage(props) {
          }
         })
     } else {
-      alert(`즉시입찰가인 ${Product.directPrice}원보다 낮아야 합니다.`)
+      alert(`즉시입찰가인 ${Product.price}원보다 낮아야 합니다.`)
     }
   }
 
@@ -101,15 +101,10 @@ function DetailProductPage(props) {
   }
 
   let chatButton, editButton, soldButton, removeButton, directButton, biddingButton, modalButton = null
-
-  if( Writer._id === localStorage.userId ) {
-    editButton = <Button size='large' shape='round'> Edit </Button>
-    soldButton = <Button size='large' shape='round' onClick = {soldProduct}> Sold </Button>
-    removeButton = <Button size='large' shape='round'type = 'danger' onClick = {deleteProduct}> Remove </Button>
-  } else {
-    chatButton = <Button size='large' shape='round' onClick = {chatting}> Chat </Button>
-    directButton = <Button size='large' shape='round' onClick = {directBuy}> DirectBuy </Button>
-    biddingButton = <Button size='large' shape='round' onClick = {openModal}> Bidding </Button>
+  
+  if( Writer._id !== localStorage.userId ) {
+    directButton = <Button size='large' shape='round' onClick = {directBuy}> 즉시구매 </Button>
+    biddingButton = <Button size='large' shape='round' onClick = {openModal}> 입찰 </Button>
     modalButton = <Modal 
                     open={ModalOpen}
                     close={closeModal}
@@ -118,6 +113,10 @@ function DetailProductPage(props) {
                     Function = {setBidding}
                   >
                   </Modal> 
+  } else {
+    editButton = <Button size='large' shape='round'> 수정 </Button>
+    soldButton = <Button size='large' shape='round' onClick = {soldProduct}> 판매완료 </Button>
+    removeButton = <Button size='large' shape='round'type = 'danger' onClick = {deleteProduct}> 삭제 </Button>
   }
   
   return (
