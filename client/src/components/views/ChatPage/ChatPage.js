@@ -98,7 +98,7 @@ export class ChatPage extends Component {
         return (
             <React.Fragment>
                 <div>
-                    <p style={{ fontSize: '2rem', textAlign: 'center' }}>채팅</p>
+                    <p style={{ fontSize: '2rem', textAlign: 'center' }}>쪽지</p>
                 </div>
 
                 <div style={{ maxWidth: '800px', margin: '0 auto' }}>
