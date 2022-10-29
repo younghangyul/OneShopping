@@ -100,19 +100,22 @@ function MyPage(props) {
       })
   }
 
-  let updateButton, cancleButton, deleteButton, editName, nickName = null;
+  let chatButton, updateButton, cancleButton, deleteButton, editName, nickName = null;
   const onClickUpdate = () => {
     setUpdate(!update);
   }
   const onClickCancle = () => {
-    props.history.go(1);
     setUpdate(!update);
+  }
+  const onClickChat = () => {
+    props.history.push('/chat');
   }
   const nameChangeHandler = (event) => {
     setName(event.currentTarget.value)
   }
   if(UserInfo.userId === localStorage._id) {
     if(update) {
+      chatButton = <Button onClick={onClickChat}>채팅</Button>
       updateButton = <Button onClick={onClickUpdate}>수정</Button>
       deleteButton = <Button onClick={onClickDelete}>삭제</Button>
       nickName = UserInfo.name
@@ -171,6 +174,9 @@ function MyPage(props) {
           onChange={onChange}
           ref={fileInput}
         />
+        <div style={{ marginBottom: '10px' }}>
+          {chatButton}
+        </div>
         <div style = {{ textAlign: 'center', marginBottom: '2rem' }}>
           {nickName}
           {editName}

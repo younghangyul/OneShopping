@@ -1,0 +1,33 @@
+.myballoon {
+    background-color: #FFF;
+    border: #80B5FF solid 1px;
+    border-radius: 5px;
+    color: #000;
+    font-size: 12px;
+    font-weight: 500;
+    height: auto;
+    letter-spacing: -0.25px;
+    margin-top: 6.8px;
+    margin-right: 2rem;
+    padding: 5px 11px;
+    position: relative;
+    width: fit-content;
+    z-index: 100;
+    float: right;
+  }
+
+  .otherballoon {
+    background-color: #FFF;
+    border: #000 solid 1px;
+    border-radius: 5px;
+    color: #000;
+    font-size: 12px;
+    font-weight: 500;
+    height: auto;
+    letter-spacing: -0.25px;
+    margin-top: 6.8px;
+    padding: 5px 11px;
+    position: relative;
+    width: fit-content;
+    z-index: 100;
+  }
