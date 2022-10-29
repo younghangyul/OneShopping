@@ -13,7 +13,7 @@ const productSchema = mongoose.Schema({
     description: {
       type: String
     },
-    directPrice: {
+    price: {
       type: Number,
       default: 0
     },

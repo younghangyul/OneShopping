@@ -20,12 +20,11 @@ const Categorys = [
   {key:12, value: "기타"}
 ]
 
-
 function UploadProductPage(props) {
 
   const [Title, setTitle] = useState("")
   const [Description, setDescription] = useState("")
-  const [DirectPrice, setDirectPrice] = useState(0)
+  const [Price, setPrice] = useState(0)
   const [BidPrice, setBidPrice] = useState(0)
   const [Category, setCategory] = useState(1)
   const [Images, setImages] = useState([])
@@ -36,8 +35,8 @@ function UploadProductPage(props) {
   const descriptionChangeHandler = (event) => {
     setDescription(event.currentTarget.value)
   }
-  const DirectPriceChangeHandler = (event) => {
-    setDirectPrice(event.currentTarget.value)
+  const priceChangeHandler = (event) => {
+    setPrice(event.currentTarget.value)
   }
   const BidPriceChangeHandler = (event) => {
     setBidPrice(event.currentTarget.value)
@@ -53,7 +52,7 @@ function UploadProductPage(props) {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    if(!Title || !Description || !DirectPrice || !BidPrice || !Category || !Images) {
+    if(!Title || !Description || !Price || !BidPrice || !Category || !Images) {
       return alert('모든 값을 넣어야 합니다.')
     }
 
@@ -62,7 +61,7 @@ function UploadProductPage(props) {
       writer: localStorage.userId, // 로그인 된 사람의 ID
       title: Title,
       description: Description,
-      directPrice: DirectPrice,
+      price: Price,
       bidPrice: BidPrice,
       images: Images,
       category: Category
@@ -104,7 +103,7 @@ function UploadProductPage(props) {
         <br />
         <br />
         <label>즉시 입찰가</label>
-        <Input type="number" onChange={DirectPriceChangeHandler} value={DirectPrice}/>
+        <Input type="number" onChange={priceChangeHandler} value={Price}/>
         <br />
         <br />
         <label>입찰 시작가</label>
@@ -116,7 +115,7 @@ function UploadProductPage(props) {
         <br />
         <br />
         <Button htmlType='submit'>
-          Upload
+          업로드
         </Button>
 
       </Form>
