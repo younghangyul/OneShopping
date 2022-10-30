@@ -102,7 +102,11 @@ function DetailProductPage(props) {
 
   let chatButton, editButton, soldButton, removeButton, directButton, biddingButton, modalButton = null
   
-  if( Writer._id !== localStorage.userId ) {
+  if( Writer._id === localStorage.userId ) {
+    editButton = <Button size='large' shape='round'> 수정 </Button>
+    soldButton = <Button size='large' shape='round' onClick = {soldProduct}> 판매완료 </Button>
+    removeButton = <Button size='large' shape='round'type = 'danger' onClick = {deleteProduct}> 삭제 </Button>
+  } else {
     directButton = <Button size='large' shape='round' onClick = {directBuy}> 즉시구매 </Button>
     biddingButton = <Button size='large' shape='round' onClick = {openModal}> 입찰 </Button>
     modalButton = <Modal 
@@ -113,10 +117,6 @@ function DetailProductPage(props) {
                     Function = {setBidding}
                   >
                   </Modal> 
-  } else {
-    editButton = <Button size='large' shape='round'> 수정 </Button>
-    soldButton = <Button size='large' shape='round' onClick = {soldProduct}> 판매완료 </Button>
-    removeButton = <Button size='large' shape='round'type = 'danger' onClick = {deleteProduct}> 삭제 </Button>
   }
   
   return (

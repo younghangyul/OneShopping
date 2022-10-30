@@ -117,17 +117,16 @@ function MyPage(props) {
   
   if(UserInfo.userId === localStorage._id) {
     if(update) {
-      chatButton = <Button onClick={onClickChat}>쪽지</Button>
-      updateButton = <Button onClick={onClickUpdate}>닉네임 수정</Button>
-      deleteButton = <Button onClick={onClickDelete}>프로필 삭제</Button>
-      nickName = UserInfo.name
-      
+      nickName = UserInfo.name 
+      updateButton = <Button onClick={onClickUpdate}>프로필 수정</Button>
     } else {
+      deleteButton = <Button onClick={onClickDelete}>기본이미지로 변경</Button>
       updateButton = <Button onClick={submitHandler}>저장</Button>
       cancleButton = <Button onClick={onClickCancle}>취소</Button>
       editName = <Input style = {{ maxWidth: '400px'}} onChange={nameChangeHandler} value={Name}/>
     }
-
+    chatButton = <Button onClick={onClickChat}>쪽지</Button>
+    
   let test, test2 = null;
   
   const renderCards = Products.map((product, index) => {
@@ -222,6 +221,9 @@ function MyPage(props) {
               />
               <div style = {{ textAlign: 'center', marginBottom: '2rem' }}>
                 {nickName}
+              </div>
+              <div>
+                {chatButton}
               </div>
 
               <br /><br /><br />
