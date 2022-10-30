@@ -209,15 +209,6 @@ function MyPage(props) {
                 src={Image}
                 style={{margin:'20px'}}
                 size={200}
-                onClick={()=>{fileInput.current.click()}}
-              />
-              <input
-                type='file'
-                style={{display:'none'}}
-                accept='image/jpg,image/png,image/jpeg'
-                name='profile_img'
-                onChange={onChange}
-                ref={fileInput}
               />
               <div style = {{ textAlign: 'center', marginBottom: '2rem' }}>
                 {nickName}
