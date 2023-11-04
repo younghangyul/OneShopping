@@ -1,6 +1,6 @@
-<div align="center" font-size=15>
-  ## 중고거래 웹사이트
-</div>
+<center> 중고거래 웹사이트 개발 </center>
+
+<center>Explain</center>
 
 ## 목차
   - [개요](#개요)
