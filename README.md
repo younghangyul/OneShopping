@@ -1,7 +1,5 @@
-<div align="center">
+<div align="center" font-size=15>
   ## 중고거래 웹사이트
-
-  explain
 </div>
 
 ## 목차
