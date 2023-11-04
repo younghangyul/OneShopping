@@ -1,6 +1,6 @@
-<center> 중고거래 웹사이트 개발 </center>
+<h2 align="center"> 중고거래 웹사이트 개발 </h2>
 
-<center>Explain</center>
+<h4 align="center"> 설명 </h2>
 
 ## 목차
   - [개요](#개요)
