@@ -21,7 +21,10 @@
 |풀스택|송한결|[steadiestt](https://github.com/steadiestt)|
 
 ## 화면
-![리드미(1)](https://github.com/younghangyul/OneShopping/assets/83628242/ba50542f-a5a5-4e4e-9e38-690a0c533ea6) ![리드미(2)](https://github.com/younghangyul/OneShopping/assets/83628242/e2076c13-ee5b-4947-bf02-d6645b205613)
+<p align="center" width="100%">
+  ![리드미(1)](https://github.com/younghangyul/OneShopping/assets/83628242/ba50542f-a5a5-4e4e-9e38-690a0c533ea6)
+  ![리드미(2)](https://github.com/younghangyul/OneShopping/assets/83628242/e2076c13-ee5b-4947-bf02-d6645b205613)
+</p>
 
 
 ## 기능
