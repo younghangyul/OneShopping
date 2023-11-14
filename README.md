@@ -4,6 +4,7 @@
 
 ## 목차
   - [개요](#개요)
+  - [화면 구성](#화면 구성)
   - [기능](#기능)
 
 ## 개요
@@ -19,5 +20,7 @@
 |풀스택|이영한|[2zerone](https://github.com/2zerone)|
 |풀스택|송한결|[steadiestt](https://github.com/steadiestt)|
 
-## 기능
+## 화면 구성
 작성 중...
+
+## 기능
